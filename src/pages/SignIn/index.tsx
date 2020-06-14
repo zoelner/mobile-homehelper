@@ -2,8 +2,8 @@ import React, { useRef, useCallback } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
+  ScrollView,
+  TextInput,
 } from 'react-native';
 
 import Button from '../../components/Button';
@@ -12,10 +12,16 @@ import Input from '../../components/Input';
 import { Container, Title, SubTitle, InputContainer } from './styles';
 import { Form, FormHandles } from '@unform/core';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSignIn = useCallback((data: object) => {
+  const handleSignIn = useCallback((data: SignInFormData) => {
     console.log(data);
   }, []);
 
@@ -26,7 +32,10 @@ const SignIn: React.FC = () => {
       keyboardVerticalOffset={136}
       enabled
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView
+        contentContainerStyle={{ flex: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
         <Container>
           <Title>Bem Vindo</Title>
           <SubTitle>
@@ -39,17 +48,27 @@ const SignIn: React.FC = () => {
               <Input
                 name="user"
                 placeholder="Usuário"
-                autoFocus
+                autoCorrect={false}
                 autoCapitalize="none"
-                textContentType="username"
                 autoCompleteType="username"
+                autoFocus
+                textContentType="username"
+                returnKeyType="next"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
               />
               <Input
+                ref={passwordInputRef}
                 name="password"
                 placeholder="Senha"
                 textContentType="password"
                 autoCompleteType="password"
                 secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => {
+                  formRef.current?.submitForm();
+                }}
               />
             </InputContainer>
           </Form>
@@ -62,7 +81,7 @@ const SignIn: React.FC = () => {
             Entrar
           </Button>
         </Container>
-      </TouchableWithoutFeedback>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
