@@ -7,33 +7,22 @@
  *
  * @format
  */
+import 'react-native-gesture-handler';
 
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, StatusBar} from 'react-native';
+import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Routes from './routes';
 
-const App = (): React.ReactElement => {
+function App() {
   return (
     <>
-      <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Mobile HomeHelper</Text>
-      </SafeAreaView>
+      <StatusBar barStyle="dark-content" />
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
     </>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    color: '#ffffff',
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-});
+}
 
 export default App;
