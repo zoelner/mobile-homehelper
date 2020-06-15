@@ -57,11 +57,11 @@ export function* getRefreshToken() {
       },
     });
 
-    const { refreshToken, token, roles } = response.data;
+    const { token } = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(refreshTokenSuccess({ refreshToken, token, roles }));
+    yield put(refreshTokenSuccess({ token }));
   } catch (error) {
     yield put(refreshTokenFailure());
   }
