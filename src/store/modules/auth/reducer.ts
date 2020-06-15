@@ -30,7 +30,12 @@ export default function auth(
         break;
       }
 
-      case AuthTypes.REFRESH_TOKEN_SUCCESS:
+      case AuthTypes.REFRESH_TOKEN_SUCCESS: {
+        const { token } = action.payload;
+        draft.token = token;
+        break;
+      }
+
       case AuthTypes.SIGN_IN_SUCCESS: {
         const { refreshToken, token } = action.payload;
 

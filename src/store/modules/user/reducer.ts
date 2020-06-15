@@ -18,12 +18,6 @@ export default function user(state = INITIAL_STATE, action: AuthActions) {
         break;
       }
 
-      case AuthTypes.REFRESH_TOKEN_SUCCESS: {
-        const { roles } = action.payload;
-        draft.roles = roles;
-        break;
-      }
-
       case AuthTypes.SIGN_OUT: {
         draft.profile = null;
         draft.roles = [];

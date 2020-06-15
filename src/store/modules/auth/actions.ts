@@ -46,14 +46,12 @@ export const signOut = () => action(AuthTypes.SIGN_OUT);
 export const refreshTokenRequest = () =>
   action(AuthTypes.REFRESH_TOKEN_REQUEST);
 
-type RefreshTokenSuccessParams = SignInSuccessParams;
+interface RefreshTokenSuccessParams {
+  token: string;
+}
 
-export const refreshTokenSuccess = ({
-  refreshToken,
-  token,
-  roles,
-}: RefreshTokenSuccessParams) =>
-  action(AuthTypes.REFRESH_TOKEN_SUCCESS, { refreshToken, token, roles });
+export const refreshTokenSuccess = ({ token }: RefreshTokenSuccessParams) =>
+  action(AuthTypes.REFRESH_TOKEN_SUCCESS, { token });
 
 export const refreshTokenFailure = () =>
   action(AuthTypes.REFRESH_TOKEN_FAILURE);
