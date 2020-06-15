@@ -1,13 +1,33 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+
+import api from '../../services/api';
+import Loader from '../../components/Loader';
+
+import { CategoryList, Category, CategoryText } from './styles';
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 const Dashboard: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    async function getCategories() {
+      const response = await api.get('category');
+
+      setCategories(response.data);
+    }
+
+    getCategories();
+  }, []);
+
+  if (!categories.length) {
+    return <Loader />;
+  }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -15,27 +35,17 @@ const Dashboard: React.FC = () => {
       keyboardVerticalOffset={136}
       enabled
     >
-      <ScrollView
-        contentContainerStyle={{ flex: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              fontWeight: 'bold',
-            }}
-          >
-            Dashboard
-          </Text>
-        </View>
-      </ScrollView>
+      {
+        <CategoryList
+          data={categories}
+          keyExtractor={(category: Category) => String(category.id)}
+          renderItem={({ item: category }: { item: Category }) => (
+            <Category>
+              <CategoryText>{category.name}</CategoryText>
+            </Category>
+          )}
+        />
+      }
     </KeyboardAvoidingView>
   );
 };

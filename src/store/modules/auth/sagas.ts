@@ -13,6 +13,7 @@ import {
   signUpRequest,
 } from './actions';
 import { Alert } from 'react-native';
+import { RootState } from '../rootReducer';
 
 export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
   try {
@@ -47,9 +48,13 @@ export function* loadToken() {
 
 export function* getRefreshToken() {
   try {
-    const loadedRefreshToken = yield select((state) => state.auth.refreshToken);
-    const response = yield call(api.post, '/auth/token', {
-      refreshToken: loadedRefreshToken,
+    const loadedRefreshToken = yield select(
+      (state: RootState) => state.auth.refreshToken,
+    );
+    const response = yield call(api.get, '/auth/token', {
+      headers: {
+        Authorization: `Bearer ${loadedRefreshToken}`,
+      },
     });
 
     const { refreshToken, token, roles } = response.data;
