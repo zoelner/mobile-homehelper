@@ -17,13 +17,13 @@ export const Container = styled.View<ContainerProps>`
     props.isErrored &&
     css`
       border-width: 2px;
-      border-color: #c53030;
+      border-color: #fa7d7d;
     `}
   ${(props) =>
     props.isFocused &&
     css`
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    `}
+    `};
 `;
 
 export const TextInput = styled.TextInput`

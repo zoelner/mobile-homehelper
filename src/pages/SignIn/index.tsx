@@ -5,24 +5,45 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
+import * as Yup from 'yup';
+import { Form, FormHandles } from '@unform/core';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Title, SubTitle, InputContainer } from './styles';
-import { Form, FormHandles } from '@unform/core';
+import getValidationError from '../../utils/getValidationError';
 
 interface SignInFormData {
-  email: string;
+  username: string;
   password: string;
 }
+
+const schema = Yup.object().shape({
+  username: Yup.string().required('Usuário obrigatório'),
+  password: Yup.string().required('Digite uma senha válida'),
+});
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSignIn = useCallback((data: SignInFormData) => {
-    console.log(data);
+  const handleSignIn = useCallback(async (data: SignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationError(err);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+    }
   }, []);
 
   return (
@@ -46,12 +67,11 @@ const SignIn: React.FC = () => {
           <Form ref={formRef} onSubmit={handleSignIn}>
             <InputContainer>
               <Input
-                name="user"
+                name="username"
                 placeholder="Usuário"
                 autoCorrect={false}
                 autoCapitalize="none"
                 autoCompleteType="username"
-                autoFocus
                 textContentType="username"
                 returnKeyType="next"
                 onSubmitEditing={() => {

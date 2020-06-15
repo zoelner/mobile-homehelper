@@ -4,15 +4,29 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Text } from 'react-native';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const RootNavigator = createStackNavigator();
 
 interface HeaderRightProps {
-  text: String;
+  text: string;
+  screen: string;
+  tintColor?: string;
 }
 
-function HeaderRight({ text }: HeaderRightProps): React.ReactElement {
-  return <Text style={{ marginRight: 16 }}>{text}</Text>;
+function HeaderRight({
+  text,
+  screen,
+  tintColor,
+}: HeaderRightProps): React.ReactElement {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableWithoutFeedback onPress={() => navigation.navigate(screen)}>
+      <Text style={{ marginRight: 16, color: tintColor }}>{text}</Text>
+    </TouchableWithoutFeedback>
+  );
 }
 
 function Routes() {
@@ -22,16 +36,21 @@ function Routes() {
         name="SignIn"
         component={SignIn}
         options={{
-          title: 'Home Helper',
-          headerRight: () => <HeaderRight text="Cadastrar" />,
+          title: 'SignIn',
+          headerRight: ({ tintColor }) => (
+            <HeaderRight
+              text="Cadastrar"
+              screen="SignUp"
+              tintColor={tintColor}
+            />
+          ),
         }}
       />
       <RootNavigator.Screen
         name="SignUp"
         component={SignUp}
         options={{
-          title: 'Home Helper',
-          headerRight: () => <HeaderRight text="Entrar" />,
+          title: 'SignUp',
         }}
       />
     </RootNavigator.Navigator>
