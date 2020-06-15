@@ -7,12 +7,15 @@ import {
 } from 'react-native';
 import * as Yup from 'yup';
 import { Form, FormHandles } from '@unform/core';
+import { useDispatch } from 'react-redux';
+
+import getValidationError from '../../utils/getValidationError';
+import { signInRequest } from '../../store/modules/auth/actions';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Title, SubTitle, InputContainer } from './styles';
-import getValidationError from '../../utils/getValidationError';
 
 interface SignInFormData {
   username: string;
@@ -28,6 +31,8 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
+  const dispatch = useDispatch();
+
   const handleSignIn = useCallback(async (data: SignInFormData) => {
     try {
       formRef.current?.setErrors({});
@@ -35,6 +40,8 @@ const SignIn: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      dispatch(signInRequest(data));
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationError(err);
@@ -82,7 +89,7 @@ const SignIn: React.FC = () => {
                 ref={passwordInputRef}
                 name="password"
                 placeholder="Senha"
-                textContentType="password"
+                textContentType="newPassword"
                 autoCompleteType="password"
                 secureTextEntry
                 returnKeyType="send"

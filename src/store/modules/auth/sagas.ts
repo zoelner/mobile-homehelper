@@ -1,7 +1,7 @@
 import { takeLatest, call, put, all, select } from 'redux-saga/effects';
-
 import api from '../../../services/api';
 import { AuthTypes } from './types';
+import * as RootNavigation from '../../../services/RootNavigation';
 
 import {
   signInSuccess,
@@ -74,9 +74,14 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
       professional: true,
     });
 
-    Alert.alert('Cadastro realizado com sucesso!');
+    Alert.alert(
+      'Cadastro realizado com sucesso!',
+      'Você já pode fazer login na aplicação',
+    );
 
     yield put(signUpSuccess());
+
+    RootNavigation.goBack();
   } catch (err) {
     Alert.alert('Falha no cadastro, verifique seus dados!');
     yield put(signFailure());

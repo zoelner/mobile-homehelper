@@ -4,8 +4,10 @@ import {
   Platform,
   ScrollView,
   TextInput,
+  Alert,
 } from 'react-native';
 import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -13,8 +15,10 @@ import Input from '../../components/Input';
 import { Container, Title, SubTitle, InputContainer } from './styles';
 import { Form, FormHandles } from '@unform/core';
 import getValidationError from '../../utils/getValidationError';
+import { useDispatch } from 'react-redux';
+import { signUpRequest } from '../../store/modules/auth/actions';
 
-interface SignInFormData {
+interface SignUpFormData {
   name: string;
   username: string;
   email: string;
@@ -28,19 +32,23 @@ const schema = Yup.object().shape({
   password: Yup.string().min(6).required('Digite uma senha válida'),
 });
 
-const SignIn: React.FC = () => {
+const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const usernameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
+  const handleSignUp = useCallback(async (data: SignUpFormData) => {
     try {
       formRef.current?.setErrors({});
 
       await schema.validate(data, {
         abortEarly: false,
       });
+
+      dispatch(signUpRequest(data));
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationError(err);
@@ -70,7 +78,7 @@ const SignIn: React.FC = () => {
             plataforma.
           </SubTitle>
 
-          <Form ref={formRef} onSubmit={handleSignIn}>
+          <Form ref={formRef} onSubmit={handleSignUp}>
             <InputContainer>
               <Input
                 name="name"
@@ -115,7 +123,7 @@ const SignIn: React.FC = () => {
                 ref={passwordInputRef}
                 name="password"
                 placeholder="Senha"
-                textContentType="password"
+                textContentType="newPassword"
                 autoCompleteType="password"
                 secureTextEntry
                 returnKeyType="send"
@@ -139,4 +147,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

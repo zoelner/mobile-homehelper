@@ -19,13 +19,14 @@ import './config/Reactotron.config';
 
 import { store, persistor } from './store';
 import Routes from './routes';
+import { navigationRef } from './services/RootNavigation';
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <StatusBar barStyle="dark-content" />
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
           <Routes />
         </NavigationContainer>
       </PersistGate>
