@@ -6,7 +6,8 @@ import {
   TextInput,
 } from 'react-native';
 import * as Yup from 'yup';
-import { Form, FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 import { useDispatch } from 'react-redux';
 
 import getValidationError from '../../utils/getValidationError';

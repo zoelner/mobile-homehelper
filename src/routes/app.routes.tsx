@@ -1,30 +1,46 @@
 import React from 'react';
-
-import { createStackNavigator } from '@react-navigation/stack';
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../pages/Dashboard';
-import HeaderRight from '../components/HeaderRight';
-import { useDispatch } from 'react-redux';
-import { signOut } from '../store/modules/auth/actions';
 
-const AppNavigator = createStackNavigator();
+const AppNavigator = createBottomTabNavigator();
 
 const AppRoutes: React.FC = () => {
-  const dispatch = useDispatch();
-
   return (
-    <AppNavigator.Navigator>
+    <AppNavigator.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: '#41cebb',
+      }}
+    >
       <AppNavigator.Screen
-        name="Dashboard"
+        name="Home"
         component={Dashboard}
         options={{
-          title: 'Dashboard',
-          headerRight: ({ tintColor }) => (
-            <HeaderRight
-              text="Sair"
-              tintColor={tintColor}
-              onPress={() => dispatch(signOut())}
-            />
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <FeatherIcon name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <AppNavigator.Screen
+        name="Busca"
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Busca',
+          tabBarIcon: ({ color, size }) => (
+            <FeatherIcon name="search" color={color} size={size} />
+          ),
+        }}
+      />
+      <AppNavigator.Screen
+        name="Perfil"
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Perfil',
+          tabBarIcon: ({ color, size }) => (
+            <FeatherIcon name="user" color={color} size={size} />
           ),
         }}
       />
