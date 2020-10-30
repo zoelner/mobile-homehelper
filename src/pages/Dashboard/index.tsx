@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import api from '../../services/api';
 import Loader from '../../components/Loader';
+
+import { AppNavigatorParamList } from '../../routes/app.routes';
 
 import {
   Container,
@@ -21,7 +24,9 @@ export interface Category {
   name: string;
 }
 
-const Dashboard: React.FC = () => {
+type Props = BottomTabScreenProps<AppNavigatorParamList, 'Home'>;
+
+function Dashboard({ navigation }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -44,7 +49,7 @@ const Dashboard: React.FC = () => {
   return (
     <Container>
       <Header>
-        <HeaderButton onPress={() => ({})}>
+        <HeaderButton onPress={() => navigation.navigate('SetLocalization')}>
           <HeaderButtonContent>
             <HeaderText> R. Rio São Francisco</HeaderText>
             <Icon name="keyboard-arrow-down" color="#717171" />
@@ -63,6 +68,6 @@ const Dashboard: React.FC = () => {
       />
     </Container>
   );
-};
+}
 
 export default Dashboard;

@@ -76,7 +76,6 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         onBlur={handleInputBlur}
         {...rest}
         placeholderTextColor="#8A8A8F"
-        keyboardAppearance="light"
       />
     </Container>
   );

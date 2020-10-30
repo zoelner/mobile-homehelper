@@ -3,18 +3,26 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../pages/Dashboard';
+import LocalizationScreens from '../pages/LocalizationScreens';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const AppNavigator = createBottomTabNavigator();
+export type HomeNavigatorParamList = {
+  Home: undefined;
+  Search: undefined;
+  Profile: undefined;
+};
 
-const AppRoutes: React.FC = () => {
+const HomeNavigator = createBottomTabNavigator<HomeNavigatorParamList>();
+
+const HomeTabs: React.FC = () => {
   return (
-    <AppNavigator.Navigator
+    <HomeNavigator.Navigator
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#41cebb',
       }}
     >
-      <AppNavigator.Screen
+      <HomeNavigator.Screen
         name="Home"
         component={Dashboard}
         options={{
@@ -24,8 +32,8 @@ const AppRoutes: React.FC = () => {
           ),
         }}
       />
-      <AppNavigator.Screen
-        name="Busca"
+      <HomeNavigator.Screen
+        name="Search"
         component={Dashboard}
         options={{
           tabBarLabel: 'Busca',
@@ -34,8 +42,8 @@ const AppRoutes: React.FC = () => {
           ),
         }}
       />
-      <AppNavigator.Screen
-        name="Perfil"
+      <HomeNavigator.Screen
+        name="Profile"
         component={Dashboard}
         options={{
           tabBarLabel: 'Perfil',
@@ -44,8 +52,36 @@ const AppRoutes: React.FC = () => {
           ),
         }}
       />
-    </AppNavigator.Navigator>
+    </HomeNavigator.Navigator>
   );
 };
 
-export default AppRoutes;
+export type StackNavigatorParamList = {
+  Home: undefined;
+  SetLocalization: undefined;
+};
+
+const Stack = createStackNavigator<StackNavigatorParamList>();
+
+function App() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeTabs}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="SetLocalization"
+        component={LocalizationScreens}
+        options={{
+          headerShown: false,
+        }}
+      ></Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+export default App;

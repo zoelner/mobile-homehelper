@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import Input from '../../components/Input';
 
 export const Container = styled.View`
   flex: 1;

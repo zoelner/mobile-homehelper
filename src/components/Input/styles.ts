@@ -7,26 +7,29 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   width: 100%;
-  height: 58px;
-  border-radius: 90px;
+  height: 40px;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 14px;
+
   background-color: #ffffff;
-  padding: 18px 24px;
-  margin-bottom: 16px;
 
   ${(props) =>
     props.isErrored &&
     css`
-      border-width: 2px;
+      border-width: 1px;
       border-color: #fa7d7d;
     `}
+
   ${(props) =>
     props.isFocused &&
     css`
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      box-shadow: 0px 2px 4px rgba(178, 178, 178, 0.25);
     `};
 `;
 
 export const TextInput = styled.TextInput`
   flex: 1;
-  font-size: 16px;
+  font-size: 14px;
+  color: #b2b2b2;
 `;
