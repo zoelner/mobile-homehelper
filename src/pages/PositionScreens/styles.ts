@@ -18,3 +18,19 @@ export const HeaderBackButton = styled(Feather).attrs({
   top: 16px;
   left: 16px;
 `;
+
+export const FakeUserInput = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: 16px 24px;
+
+  background-color: #f7f7f7;
+  border: 1px solid #f2f2f2;
+  margin: 8px;
+`;
+
+export const FakeUserInputText = styled.Text`
+  font-size: 14px;
+  color: #8a8a8f;
+  margin-left: 16px;
+`;

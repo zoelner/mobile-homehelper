@@ -3,7 +3,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../pages/Dashboard';
-import LocalizationScreens from '../pages/LocalizationScreens';
+import PositionScreens from '../pages/PositionScreens';
 import { createStackNavigator } from '@react-navigation/stack';
 
 export type HomeNavigatorParamList = {
@@ -58,7 +58,7 @@ const HomeTabs: React.FC = () => {
 
 export type StackNavigatorParamList = {
   Home: undefined;
-  SetLocalization: undefined;
+  SetPosition: undefined;
 };
 
 const Stack = createStackNavigator<StackNavigatorParamList>();
@@ -74,12 +74,12 @@ function App() {
         }}
       />
       <Stack.Screen
-        name="SetLocalization"
-        component={LocalizationScreens}
+        name="SetPosition"
+        component={PositionScreens}
         options={{
           headerShown: false,
         }}
-      ></Stack.Screen>
+      />
     </Stack.Navigator>
   );
 }

@@ -5,6 +5,8 @@ export const Container = styled.View`
   background-color: #f2f2f2;
   align-items: center;
   justify-content: center;
+  width: 300px;
+  margin: auto;
 `;
 
 export const Title = styled.Text`
@@ -19,7 +21,10 @@ export const SubTitle = styled.Text`
 `;
 
 export const InputContainer = styled.View`
-  margin-top: 56px;
-  margin-bottom: 36px;
+  margin-top: 40px;
+  margin-bottom: 24px;
   width: 300px;
+
+  height: 112px;
+  justify-content: space-between;
 `;
