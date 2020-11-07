@@ -6,7 +6,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import api from '../../services/api';
 import Loader from '../../components/Loader';
 
-import { AppNavigatorParamList } from '../../routes/app.routes';
+import { StackNavigatorParamList } from '../../routes/app.routes';
 
 import {
   Container,
@@ -24,7 +24,7 @@ export interface Category {
   name: string;
 }
 
-type Props = BottomTabScreenProps<AppNavigatorParamList, 'Home'>;
+type Props = BottomTabScreenProps<StackNavigatorParamList, 'Home'>;
 
 function Dashboard({ navigation }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -49,7 +49,7 @@ function Dashboard({ navigation }: Props) {
   return (
     <Container>
       <Header>
-        <HeaderButton onPress={() => navigation.navigate('SetPosition')}>
+        <HeaderButton onPress={() => navigation.navigate('Positions')}>
           <HeaderButtonContent>
             <HeaderText> R. Rio São Francisco</HeaderText>
             <Icon name="keyboard-arrow-down" color="#717171" />

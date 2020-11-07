@@ -58,7 +58,7 @@ const HomeTabs: React.FC = () => {
 
 export type StackNavigatorParamList = {
   Home: undefined;
-  SetPosition: undefined;
+  Positions: undefined;
 };
 
 const Stack = createStackNavigator<StackNavigatorParamList>();
@@ -74,7 +74,7 @@ function App() {
         }}
       />
       <Stack.Screen
-        name="SetPosition"
+        name="Positions"
         component={PositionScreens}
         options={{
           headerShown: false,
