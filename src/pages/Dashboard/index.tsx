@@ -49,7 +49,7 @@ function Dashboard({ navigation }: Props) {
   return (
     <Container>
       <Header>
-        <HeaderButton onPress={() => navigation.navigate('Positions')}>
+        <HeaderButton onPress={() => navigation.navigate('SelectPosition')}>
           <HeaderButtonContent>
             <HeaderText> R. Rio São Francisco</HeaderText>
             <Icon name="keyboard-arrow-down" color="#717171" />

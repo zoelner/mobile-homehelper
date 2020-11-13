@@ -3,8 +3,13 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '../pages/Dashboard';
-import PositionScreens from '../pages/PositionScreens';
 import { createStackNavigator } from '@react-navigation/stack';
+
+import SelectPosition from '../pages/PositionScreens/SelectPosition';
+import FindPosition, {
+  NominatinResponse,
+} from '../pages/PositionScreens/FindPosition';
+import ConfirmPosition from '../pages/PositionScreens/ConfirmPosition';
 
 export type HomeNavigatorParamList = {
   Home: undefined;
@@ -59,6 +64,12 @@ const HomeTabs: React.FC = () => {
 export type StackNavigatorParamList = {
   Home: undefined;
   Positions: undefined;
+  SelectPosition: undefined;
+  FindPosition: {
+    latitude: number;
+    longitude: number;
+  };
+  ConfirmPosition: NominatinResponse;
 };
 
 const Stack = createStackNavigator<StackNavigatorParamList>();
@@ -74,8 +85,22 @@ function App() {
         }}
       />
       <Stack.Screen
-        name="Positions"
-        component={PositionScreens}
+        name="SelectPosition"
+        component={SelectPosition}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="FindPosition"
+        component={FindPosition}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ConfirmPosition"
+        component={ConfirmPosition}
         options={{
           headerShown: false,
         }}

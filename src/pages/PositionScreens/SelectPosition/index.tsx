@@ -20,7 +20,7 @@ import api from '../../../services/api';
 
 interface NominatinAddress {
   lat: number;
-  long: number;
+  lon: number;
   address: {
     road: string;
     suburb: string;
@@ -37,7 +37,7 @@ interface ProfileAddress {
   longitude: number;
 }
 
-type Props = StackScreenProps<StackNavigatorParamList, 'Positions'>;
+type Props = StackScreenProps<StackNavigatorParamList, 'SelectPosition'>;
 
 function SelectPosition({ navigation }: Props) {
   const [currentLocation, setCurrentLocation] = useState<NominatinAddress>(
@@ -85,7 +85,14 @@ function SelectPosition({ navigation }: Props) {
         <HeaderBackButton onPress={() => navigation.goBack()} />
       </Header>
 
-      <TouchableWithoutFeedback onPress={() => ({})}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate('FindPosition', {
+            latitude: Number(currentLocation.lat),
+            longitude: Number(currentLocation.lon),
+          });
+        }}
+      >
         <FakeUserInput>
           <Feather name="search" color="#8A8A8F" size={20} />
           <FakeUserInputText>Buscar endereço</FakeUserInputText>
