@@ -13,7 +13,8 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Title, SubTitle, InputContainer } from './styles';
-import { Form, FormHandles } from '@unform/core';
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
 import getValidationError from '../../utils/getValidationError';
 import { useDispatch } from 'react-redux';
 import { signUpRequest } from '../../store/modules/auth/actions';

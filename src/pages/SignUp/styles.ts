@@ -20,7 +20,10 @@ export const SubTitle = styled.Text`
 `;
 
 export const InputContainer = styled.View`
-  margin-top: 56px;
-  margin-bottom: 36px;
+  margin-top: 36px;
+  margin-bottom: 16px;
   width: 300px;
+
+  height: 224px;
+  justify-content: space-between;
 `;

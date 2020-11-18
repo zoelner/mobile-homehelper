@@ -23,7 +23,7 @@ interface InputRef {
   focus(): void;
 }
 
-const Input: React.RefForwardingComponent<InputRef, InputProps> = (
+const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
   { name, containerStyle = {}, ...rest },
   ref,
 ) => {
@@ -53,7 +53,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
       name: fieldName,
       ref: inputValueRef.current,
       path: 'value',
-      setValue(ref: any, value) {
+      setValue(_, value) {
         inputValueRef.current.value = value;
         inputElementRef.current.setNativeProps({ text: value });
       },
@@ -76,7 +76,6 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
         onBlur={handleInputBlur}
         {...rest}
         placeholderTextColor="#8A8A8F"
-        keyboardAppearance="light"
       />
     </Container>
   );

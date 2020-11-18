@@ -1,4 +1,5 @@
 import { action } from 'typesafe-actions';
+import { Roles } from '../user/types';
 import { AuthTypes } from './types';
 
 interface SignInRequestParams {
@@ -12,7 +13,7 @@ export const signInRequest = ({ username, password }: SignInRequestParams) =>
 interface SignInSuccessParams {
   token: string;
   refreshToken: string;
-  roles: string[];
+  roles: Roles[];
 }
 
 export const signInSuccess = ({

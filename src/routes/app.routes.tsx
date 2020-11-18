@@ -1,35 +1,90 @@
 import React from 'react';
-
+import FeatherIcon from 'react-native-vector-icons/Feather';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 import Dashboard from '../pages/Dashboard';
-import HeaderRight from '../components/HeaderRight';
-import { useDispatch } from 'react-redux';
-import { signOut } from '../store/modules/auth/actions';
+import PositionScreens, {
+  PositionScreensNavigatorParamList,
+} from '../pages/PositionScreens/PositionScreens';
 
-const AppNavigator = createStackNavigator();
+export type HomeNavigatorParamList = {
+  Home: undefined;
+  Search: undefined;
+  Profile: undefined;
+};
 
-const AppRoutes: React.FC = () => {
-  const dispatch = useDispatch();
+const HomeNavigator = createBottomTabNavigator<HomeNavigatorParamList>();
 
+function HomeTabs() {
   return (
-    <AppNavigator.Navigator>
-      <AppNavigator.Screen
-        name="Dashboard"
+    <HomeNavigator.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: '#41cebb',
+      }}
+    >
+      <HomeNavigator.Screen
+        name="Home"
         component={Dashboard}
         options={{
-          title: 'Dashboard',
-          headerRight: ({ tintColor }) => (
-            <HeaderRight
-              text="Sair"
-              tintColor={tintColor}
-              onPress={() => dispatch(signOut())}
-            />
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <FeatherIcon name="home" color={color} size={size} />
           ),
         }}
       />
-    </AppNavigator.Navigator>
+      <HomeNavigator.Screen
+        name="Search"
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Busca',
+          tabBarIcon: ({ color, size }) => (
+            <FeatherIcon name="search" color={color} size={size} />
+          ),
+        }}
+      />
+      <HomeNavigator.Screen
+        name="Profile"
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Perfil',
+          tabBarIcon: ({ color, size }) => (
+            <FeatherIcon name="user" color={color} size={size} />
+          ),
+        }}
+      />
+    </HomeNavigator.Navigator>
   );
+}
+
+export type MainStackParamList = {
+  Home: NavigatorScreenParams<HomeNavigatorParamList>;
+  PositionScreens: NavigatorScreenParams<PositionScreensNavigatorParamList>;
 };
 
-export default AppRoutes;
+const MainStack = createStackNavigator<MainStackParamList>();
+
+function App() {
+  return (
+    <MainStack.Navigator>
+      <MainStack.Screen
+        name="Home"
+        component={HomeTabs}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <MainStack.Screen
+        name="PositionScreens"
+        component={PositionScreens}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </MainStack.Navigator>
+  );
+}
+
+export default App;

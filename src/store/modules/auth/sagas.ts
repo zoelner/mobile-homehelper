@@ -15,11 +15,18 @@ import {
 import { Alert } from 'react-native';
 import { RootState } from '../rootReducer';
 
+import { AxiosResponse } from 'axios';
+import { Roles } from '../user/types';
+
 export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
   try {
     const { username, password } = payload;
 
-    const response = yield call(api.post, `/auth/login`, {
+    const response: AxiosResponse<{
+      refreshToken: string;
+      token: string;
+      roles: Roles[];
+    }> = yield call(api.post, `/auth/login`, {
       username,
       password,
     });
@@ -51,10 +58,8 @@ export function* getRefreshToken() {
     const loadedRefreshToken = yield select(
       (state: RootState) => state.auth.refreshToken,
     );
-    const response = yield call(api.get, '/auth/token', {
-      headers: {
-        Authorization: `Bearer ${loadedRefreshToken}`,
-      },
+    const response = yield call(api.post, '/auth/token', {
+      refreshToken: `${loadedRefreshToken}`,
     });
 
     const { token } = response.data;

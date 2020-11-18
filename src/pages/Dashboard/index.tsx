@@ -1,24 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import api from '../../services/api';
 import Loader from '../../components/Loader';
 
-import { CategoryList, Category, CategoryText } from './styles';
+import { MainStackParamList } from '../../routes/app.routes';
 
-interface Category {
+import {
+  Container,
+  Header,
+  HeaderText,
+  HeaderButton,
+  HeaderButtonContent,
+  CategoryList,
+  CategoryItem,
+  CategoryText,
+} from './styles';
+
+export interface Category {
   id: number;
   name: string;
 }
 
-const Dashboard: React.FC = () => {
+type Props = BottomTabScreenProps<MainStackParamList, 'Home'>;
+
+function Dashboard({ navigation }: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     async function getCategories() {
-      const response = await api.get('category');
-
-      setCategories(response.data);
+      try {
+        const response = await api.get<Category[]>('category');
+        setCategories(response.data);
+      } catch (error) {
+        Alert.alert('Não foi possivel obter as categorias.');
+      }
     }
 
     getCategories();
@@ -29,25 +47,33 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={136}
-      enabled
-    >
-      {
-        <CategoryList
-          data={categories}
-          keyExtractor={(category: Category) => String(category.id)}
-          renderItem={({ item: category }: { item: Category }) => (
-            <Category>
-              <CategoryText>{category.name}</CategoryText>
-            </Category>
-          )}
-        />
-      }
-    </KeyboardAvoidingView>
+    <Container>
+      <Header>
+        <HeaderButton
+          onPress={() =>
+            navigation.navigate('PositionScreens', {
+              screen: 'SelectPosition',
+            })
+          }
+        >
+          <HeaderButtonContent>
+            <HeaderText> R. Rio São Francisco</HeaderText>
+            <Icon name="keyboard-arrow-down" color="#717171" />
+          </HeaderButtonContent>
+        </HeaderButton>
+      </Header>
+
+      <CategoryList
+        data={categories}
+        keyExtractor={(category) => String(category.id)}
+        renderItem={({ item: category }) => (
+          <CategoryItem>
+            <CategoryText>{category.name}</CategoryText>
+          </CategoryItem>
+        )}
+      />
+    </Container>
   );
-};
+}
 
 export default Dashboard;
