@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import MapView, { LatLng, MapEvent, Marker } from 'react-native-maps';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import Axios from 'axios';
 
 import Button from '../../../components/Button';
-import { StackNavigatorParamList } from '../../../routes/app.routes';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+import { PositionScreensNavigatorParamList } from '../PositionScreens';
+import { MainStackParamList } from '../../../routes/app.routes';
 
 export interface NominatinResponse {
   place_id: number;
@@ -36,24 +38,35 @@ export interface NominatinResponse {
   };
 }
 
-type Props = StackScreenProps<StackNavigatorParamList, 'FindPosition'>;
+type FindRouteProp = RouteProp<
+  PositionScreensNavigatorParamList,
+  'FindPosition'
+>;
+
+type Props = {
+  route: FindRouteProp;
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<PositionScreensNavigatorParamList, 'FindPosition'>,
+    StackNavigationProp<MainStackParamList>
+  >;
+};
 
 function FindPosition({ route, navigation }: Props) {
-  const [coordinate, setCoordinate] = useState<LatLng>(route.params);
+  const [coordinate, setCoordinate] = useState<LatLng>({
+    latitude: Number(route.params.data.lat),
+    longitude: Number(route.params.data.lon),
+  });
+
   const [description, setDescription] = useState<NominatinResponse>(
-    () => (getProperties(route.params) as unknown) as NominatinResponse,
+    route.params.data,
   );
 
-  async function getProperties({
-    latitude,
-    longitude,
-  }: LatLng): Promise<NominatinResponse> {
+  async function getProperties({ latitude, longitude }: LatLng) {
     const response = await Axios.get<NominatinResponse>(
       `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
     );
 
     setDescription(response.data);
-    return response.data;
   }
 
   async function setProperties(event: MapEvent) {
@@ -68,7 +81,8 @@ function FindPosition({ route, navigation }: Props) {
       <MapView
         style={styles.map}
         region={{
-          ...route.params,
+          latitude: Number(route.params.data.lat),
+          longitude: Number(route.params.data.lon),
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
         }}
@@ -84,7 +98,10 @@ function FindPosition({ route, navigation }: Props) {
       <View style={styles.containerButton}>
         <Button
           onPress={() => {
-            navigation.navigate('ConfirmPosition', description);
+            navigation.navigate('ConfirmPosition', {
+              data: description,
+              isNew: route.params.isNew,
+            });
           }}
         >
           Confirmar

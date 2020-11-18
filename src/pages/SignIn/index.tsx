@@ -90,7 +90,7 @@ const SignIn: React.FC = () => {
                 ref={passwordInputRef}
                 name="password"
                 placeholder="Senha"
-                textContentType="newPassword"
+                textContentType="password"
                 autoCompleteType="password"
                 secureTextEntry
                 returnKeyType="send"

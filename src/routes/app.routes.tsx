@@ -1,15 +1,13 @@
 import React from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 import Dashboard from '../pages/Dashboard';
-import { createStackNavigator } from '@react-navigation/stack';
-
-import SelectPosition from '../pages/PositionScreens/SelectPosition';
-import FindPosition, {
-  NominatinResponse,
-} from '../pages/PositionScreens/FindPosition';
-import ConfirmPosition from '../pages/PositionScreens/ConfirmPosition';
+import PositionScreens, {
+  PositionScreensNavigatorParamList,
+} from '../pages/PositionScreens/PositionScreens';
 
 export type HomeNavigatorParamList = {
   Home: undefined;
@@ -19,7 +17,7 @@ export type HomeNavigatorParamList = {
 
 const HomeNavigator = createBottomTabNavigator<HomeNavigatorParamList>();
 
-const HomeTabs: React.FC = () => {
+function HomeTabs() {
   return (
     <HomeNavigator.Navigator
       initialRouteName="Home"
@@ -59,53 +57,33 @@ const HomeTabs: React.FC = () => {
       />
     </HomeNavigator.Navigator>
   );
+}
+
+export type MainStackParamList = {
+  Home: NavigatorScreenParams<HomeNavigatorParamList>;
+  PositionScreens: NavigatorScreenParams<PositionScreensNavigatorParamList>;
 };
 
-export type StackNavigatorParamList = {
-  Home: undefined;
-  Positions: undefined;
-  SelectPosition: undefined;
-  FindPosition: {
-    latitude: number;
-    longitude: number;
-  };
-  ConfirmPosition: NominatinResponse;
-};
-
-const Stack = createStackNavigator<StackNavigatorParamList>();
+const MainStack = createStackNavigator<MainStackParamList>();
 
 function App() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <MainStack.Navigator>
+      <MainStack.Screen
         name="Home"
         component={HomeTabs}
         options={{
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="SelectPosition"
-        component={SelectPosition}
+      <MainStack.Screen
+        name="PositionScreens"
+        component={PositionScreens}
         options={{
           headerShown: false,
         }}
       />
-      <Stack.Screen
-        name="FindPosition"
-        component={FindPosition}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="ConfirmPosition"
-        component={ConfirmPosition}
-        options={{
-          headerShown: false,
-        }}
-      />
-    </Stack.Navigator>
+    </MainStack.Navigator>
   );
 }
 

@@ -1,4 +1,4 @@
-import { StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { Form } from '@unform/mobile';
 import React, { useCallback, useRef } from 'react';
 import {
@@ -11,34 +11,63 @@ import {
 } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FormHandles } from '@unform/core';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
-import { StackNavigatorParamList } from '../../../routes/app.routes';
+import { PositionScreensNavigatorParamList } from '../PositionScreens';
+import { MainStackParamList } from '../../../routes/app.routes';
+import api from '../../../services/api';
 
-type Props = StackScreenProps<StackNavigatorParamList, 'ConfirmPosition'>;
+type ConfirmRouteProp = RouteProp<
+  PositionScreensNavigatorParamList,
+  'ConfirmPosition'
+>;
+
+type Props = {
+  route: ConfirmRouteProp;
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<PositionScreensNavigatorParamList, 'ConfirmPosition'>,
+    StackNavigationProp<MainStackParamList>
+  >;
+};
 
 interface ConfirmPositionFormData {
-  streetName: string;
+  number: string;
   complement: string;
 }
 
-function ConfirmPosition({ route, navigation }: Props) {
+function ConfirmPosition({ navigation, route }: Props) {
   const formRef = useRef<FormHandles>(null);
 
-  const { address, lon, lat } = route.params;
+  const { data, isNew } = route.params;
+  const { address, lon, lat } = data;
 
-  const onSubmit = useCallback(
-    async (data: ConfirmPositionFormData) => {
-      try {
-        console.log('OnSubmit');
-      } catch (error) {
-        Alert.alert('OOops...', error.message);
-      }
-    },
-    [navigation.navigate],
-  );
+  async function onSubmit({ complement, number }: ConfirmPositionFormData) {
+    try {
+      const callMethod = isNew ? 'post' : 'put';
+
+      const response = await api[callMethod]('/profile', {
+        address: {
+          streetName: address.road,
+          zipCode: address.postcode,
+          latitude: lat,
+          longitude: lon,
+          number,
+          complement,
+        },
+      });
+
+      response.data;
+
+      navigation.navigate('Home', {
+        screen: 'Home',
+      });
+    } catch (error) {
+      Alert.alert('OOops...', error.message);
+    }
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -69,7 +98,7 @@ function ConfirmPosition({ route, navigation }: Props) {
           <Form ref={formRef} onSubmit={onSubmit} style={styles.form}>
             <View style={{ width: 100, marginRight: 16 }}>
               <Text style={styles.formLabel}>Número</Text>
-              <Input name="streetName" placeholder="Número" />
+              <Input name="number" placeholder="Número" />
             </View>
             <View style={{ width: 200 }}>
               <Text style={styles.formLabel}>Complemento</Text>
