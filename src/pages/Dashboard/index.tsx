@@ -50,11 +50,11 @@ function Dashboard({ navigation }: Props) {
     <Container>
       <Header>
         <HeaderButton
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('PositionScreens', {
               screen: 'SelectPosition',
-            })
-          }
+            });
+          }}
         >
           <HeaderButtonContent>
             <HeaderText> R. Rio São Francisco</HeaderText>

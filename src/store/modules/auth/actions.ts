@@ -36,7 +36,12 @@ export const signUpRequest = ({
   email,
   password,
 }: SignUpRequestParams) =>
-  action(AuthTypes.SIGN_UP_REQUEST, { name, username, email, password });
+  action(AuthTypes.SIGN_UP_REQUEST, {
+    name,
+    username,
+    email,
+    password,
+  });
 
 export const signUpSuccess = () => action(AuthTypes.SIGN_UP_SUCCESS);
 

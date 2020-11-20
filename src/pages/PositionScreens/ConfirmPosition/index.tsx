@@ -1,14 +1,7 @@
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Form } from '@unform/mobile';
-import React, { useCallback, useRef } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  Dimensions,
-  Alert,
-} from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, SafeAreaView, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FormHandles } from '@unform/core';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
@@ -19,6 +12,8 @@ import Button from '../../../components/Button';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
 import { MainStackParamList } from '../../../routes/app.routes';
 import api from '../../../services/api';
+
+import styles from './styles';
 
 type ConfirmRouteProp = RouteProp<
   PositionScreensNavigatorParamList,
@@ -90,9 +85,9 @@ function ConfirmPosition({ navigation, route }: Props) {
         </MapView>
         <View style={styles.header}>
           <Text style={styles.headerTitle}>{address.road}</Text>
-          <Text
-            style={styles.headerSubtitle}
-          >{`${address.suburb},${address.city}, ${address.state}`}</Text>
+          <Text style={styles.headerSubtitle}>
+            {`${address.suburb},${address.city}, ${address.state}`}
+          </Text>
         </View>
         <View>
           <Form ref={formRef} onSubmit={onSubmit} style={styles.form}>
@@ -120,52 +115,5 @@ function ConfirmPosition({ navigation, route }: Props) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f2f2f2',
-  },
-  header: {
-    marginTop: 32,
-    marginBottom: 56,
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  headerTitle: {
-    fontWeight: 'bold',
-  },
-  headerSubtitle: {
-    fontSize: 12,
-    marginTop: 2,
-    color: '#555555',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: 80,
-  },
-  form: {
-    flexDirection: 'row',
-    width: Dimensions.get('window').width,
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  formLabel: {
-    marginBottom: 8,
-    paddingLeft: 4,
-  },
-  containerButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: Dimensions.get('window').width,
-    paddingLeft: 16,
-    paddingRight: 16,
-    marginTop: 64,
-  },
-  button: {
-    width: '100%',
-  },
-});
 
 export default ConfirmPosition;

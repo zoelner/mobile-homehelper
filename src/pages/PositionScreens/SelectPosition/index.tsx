@@ -3,8 +3,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Alert, Image, TouchableWithoutFeedback } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Axios from 'axios';
-import Feather from 'react-native-vector-icons/Feather';
 
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { MainStackParamList } from '../../../routes/app.routes';
 import BackgroundPositionFirstStep from '../../../assets/images/background-localization-first-step.png';
 
@@ -17,7 +17,6 @@ import {
 } from './styles';
 import PositionCards from './PositionCards';
 import api from '../../../services/api';
-import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
 import {
   parseCurrentAddress,
@@ -55,7 +54,7 @@ type Props = {
   navigation: PositionsScreenNavigationProp;
 };
 
-function SelectPosition({ navigation }: Props) {
+function SelectPosition({ navigation, route }: Props) {
   const [
     currentLocation,
     setCurrentLocation,
@@ -80,7 +79,7 @@ function SelectPosition({ navigation }: Props) {
 
   useEffect(() => {
     getDeviceLocalization();
-  }, []);
+  }, [getDeviceLocalization]);
 
   useEffect(() => {
     async function getProfileLocalization() {

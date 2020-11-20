@@ -1,12 +1,10 @@
 import styled, { css } from 'styled-components/native';
 
-interface ICurrentLocalization {
+interface CurrentLocalization {
   active: boolean;
 }
 
-export const CurrentLocalization = styled.TouchableOpacity<
-  ICurrentLocalization
->`
+export const CurrentLocalization = styled.TouchableOpacity<CurrentLocalization>`
   padding: 16px 24px;
   flex-direction: row;
   background-color: #ffffff;

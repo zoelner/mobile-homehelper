@@ -2,11 +2,9 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SelectPosition from '../../pages/PositionScreens/SelectPosition';
-import FindPosition, {
-  NominatinResponse,
-} from '../../pages/PositionScreens/FindPosition';
-import ConfirmPosition from '../../pages/PositionScreens/ConfirmPosition';
+import SelectPosition from './SelectPosition';
+import FindPosition, { NominatinResponse } from './FindPosition';
+import ConfirmPosition from './ConfirmPosition';
 
 export type PositionScreensNavigatorParamList = {
   SelectPosition: undefined;

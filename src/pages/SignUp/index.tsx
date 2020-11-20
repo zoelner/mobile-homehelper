@@ -4,19 +4,17 @@ import {
   Platform,
   ScrollView,
   TextInput,
-  Alert,
 } from 'react-native';
 import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
 
+import { Form } from '@unform/mobile';
+import { FormHandles } from '@unform/core';
+import { useDispatch } from 'react-redux';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
 import { Container, Title, SubTitle, InputContainer } from './styles';
-import { Form } from '@unform/mobile';
-import { FormHandles } from '@unform/core';
 import getValidationError from '../../utils/getValidationError';
-import { useDispatch } from 'react-redux';
 import { signUpRequest } from '../../store/modules/auth/actions';
 
 interface SignUpFormData {
@@ -39,27 +37,27 @@ const SignUp: React.FC = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
 
-  const handleSignUp = useCallback(async (data: SignUpFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignUp = useCallback(
+    async (data: SignUpFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      dispatch(signUpRequest(data));
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationError(err);
+        dispatch(signUpRequest(data));
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationError(err);
 
-        formRef.current?.setErrors(errors);
-
-        return;
+          formRef.current?.setErrors(errors);
+        }
       }
-    }
-  }, []);
+    },
+    [dispatch],
+  );
 
   return (
     <KeyboardAvoidingView
