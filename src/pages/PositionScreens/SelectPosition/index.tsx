@@ -5,7 +5,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Axios from 'axios';
 
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
-import { MainStackParamList } from '../../../routes/app.routes';
+import { RootParamList } from '../../../routes/app.routes';
 import BackgroundPositionFirstStep from '../../../assets/images/background-localization-first-step.png';
 
 import {
@@ -46,7 +46,7 @@ type PositionsRouteProp = RouteProp<
 
 type PositionsScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<PositionScreensNavigatorParamList, 'SelectPosition'>,
-  StackNavigationProp<MainStackParamList>
+  StackNavigationProp<RootParamList>
 >;
 
 type Props = {
@@ -109,7 +109,7 @@ function SelectPosition({ navigation, route }: Props) {
 
       setProfileLocation(response.data);
 
-      navigation.navigate('Home', { screen: 'Home' });
+      navigation.navigate('Main', { screen: 'Home' });
     } catch (e) {
       Alert.alert(
         'Ocorreu algum erro',

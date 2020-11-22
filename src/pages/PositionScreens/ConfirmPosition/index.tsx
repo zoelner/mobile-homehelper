@@ -10,7 +10,7 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import { MainStackParamList } from '../../../routes/app.routes';
+import { RootParamList } from '../../../routes/app.routes';
 import api from '../../../services/api';
 
 import styles from './styles';
@@ -24,7 +24,7 @@ type Props = {
   route: ConfirmRouteProp;
   navigation: CompositeNavigationProp<
     StackNavigationProp<PositionScreensNavigatorParamList, 'ConfirmPosition'>,
-    StackNavigationProp<MainStackParamList>
+    StackNavigationProp<RootParamList>
   >;
 };
 
@@ -56,7 +56,7 @@ function ConfirmPosition({ navigation, route }: Props) {
 
       response.data;
 
-      navigation.navigate('Home', {
+      navigation.navigate('Main', {
         screen: 'Home',
       });
     } catch (error) {

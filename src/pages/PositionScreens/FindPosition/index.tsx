@@ -7,7 +7,7 @@ import Axios from 'axios';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import Button from '../../../components/Button';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import { MainStackParamList } from '../../../routes/app.routes';
+import { RootParamList } from '../../../routes/app.routes';
 
 const styles = StyleSheet.create({
   container: {
@@ -68,7 +68,7 @@ type Props = {
   route: FindRouteProp;
   navigation: CompositeNavigationProp<
     StackNavigationProp<PositionScreensNavigatorParamList, 'FindPosition'>,
-    StackNavigationProp<MainStackParamList>
+    StackNavigationProp<RootParamList>
   >;
 };
 
