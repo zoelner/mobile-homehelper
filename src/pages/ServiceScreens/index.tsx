@@ -2,27 +2,29 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Category from '../Category';
+import Service from '../Service';
 
 export type ServiceScreensNavigatorParamList = {
-  Category: {
+  Service: {
     id: number;
   };
 };
 
-const Service = createStackNavigator<ServiceScreensNavigatorParamList>();
+const Stack = createStackNavigator<ServiceScreensNavigatorParamList>();
 
 function ServiceScreens() {
   return (
-    <Service.Navigator>
-      <Service.Screen
-        name="Category"
-        component={Category}
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Service"
+        component={Service}
         options={{
           headerShown: true,
+          title: 'Serviços',
+          headerBackTitle: 'Voltar',
         }}
       />
-    </Service.Navigator>
+    </Stack.Navigator>
   );
 }
 

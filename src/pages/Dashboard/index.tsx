@@ -47,10 +47,8 @@ function Dashboard({ navigation }: Props) {
 
   function navigateToCategory(id: number) {
     navigation.navigate('ServiceScreens', {
-      screen: 'Category',
-      params: {
-        id,
-      },
+      screen: 'Service',
+      params: { id },
     });
   }
 

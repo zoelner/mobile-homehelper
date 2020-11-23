@@ -2,8 +2,6 @@ import styled from 'styled-components/native';
 import { Dimensions, Image as ImageNative } from 'react-native';
 
 export const Container = styled.View`
-  height: 100%;
-
   margin: 8px 8px 0px 8px;
 
   align-items: center;
