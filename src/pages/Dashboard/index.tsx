@@ -4,9 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 import api from '../../services/api';
-import Loader from '../../components/Loader';
 
-import { MainStackParamList } from '../../routes/app.routes';
+import { RootParamList } from '../../routes/app.routes';
 
 import {
   Container,
@@ -15,25 +14,29 @@ import {
   HeaderButton,
   HeaderButtonContent,
   CategoryList,
-  CategoryItem,
-  CategoryText,
+  ServiceList,
+  Title,
 } from './styles';
 
-export interface Category {
-  id: number;
-  name: string;
-}
+import CategoryItem, { CategoryType } from './CategoryItem';
+import ServiceItem, { ServiceType } from './ServiceItem';
 
-type Props = BottomTabScreenProps<MainStackParamList, 'Home'>;
+type Props = BottomTabScreenProps<RootParamList, 'Main'>;
 
 function Dashboard({ navigation }: Props) {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [services, setService] = useState<ServiceType[]>([]);
 
   useEffect(() => {
     async function getCategories() {
       try {
-        const response = await api.get<Category[]>('category');
-        setCategories(response.data);
+        const [categoriesResponse, servicesResponse] = await Promise.all([
+          api.get<CategoryType[]>('category'),
+          api.get<ServiceType[]>('servicetype'),
+        ]);
+
+        setCategories(categoriesResponse.data);
+        setService(servicesResponse.data);
       } catch (error) {
         Alert.alert('Não foi possivel obter as categorias.');
       }
@@ -42,19 +45,22 @@ function Dashboard({ navigation }: Props) {
     getCategories();
   }, []);
 
-  if (!categories.length) {
-    return <Loader />;
+  function navigateToCategory(id: number) {
+    navigation.navigate('ServiceScreens', {
+      screen: 'Service',
+      params: { id },
+    });
   }
 
   return (
     <Container>
       <Header>
         <HeaderButton
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('PositionScreens', {
               screen: 'SelectPosition',
-            })
-          }
+            });
+          }}
         >
           <HeaderButtonContent>
             <HeaderText> R. Rio São Francisco</HeaderText>
@@ -66,11 +72,20 @@ function Dashboard({ navigation }: Props) {
       <CategoryList
         data={categories}
         keyExtractor={(category) => String(category.id)}
+        horizontal
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item: category }) => (
-          <CategoryItem>
-            <CategoryText>{category.name}</CategoryText>
-          </CategoryItem>
+          <CategoryItem data={category} onPress={navigateToCategory} />
         )}
+      />
+
+      <Title>Serviços</Title>
+
+      <ServiceList
+        data={services}
+        keyExtractor={(service) => String(service.id)}
+        numColumns={2}
+        renderItem={({ item: service }) => <ServiceItem data={service} />}
       />
     </Container>
   );

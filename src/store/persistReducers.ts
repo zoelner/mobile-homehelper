@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { persistReducer } from 'redux-persist';
 
-export default (reducers) => {
+function persist(reducers) {
   const persistedReducer = persistReducer(
     {
       key: '@homehelper',
@@ -12,4 +12,6 @@ export default (reducers) => {
   );
 
   return persistedReducer;
-};
+}
+
+export default persist;

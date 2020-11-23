@@ -34,25 +34,26 @@ const SignIn: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const handleSignIn = useCallback(async (data: SignInFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSignIn = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      dispatch(signInRequest(data));
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationError(err);
+        dispatch(signInRequest(data));
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationError(err);
 
-        formRef.current?.setErrors(errors);
-
-        return;
+          formRef.current?.setErrors(errors);
+        }
       }
-    }
-  }, []);
+    },
+    [dispatch],
+  );
 
   return (
     <KeyboardAvoidingView

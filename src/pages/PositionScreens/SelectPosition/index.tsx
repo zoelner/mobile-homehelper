@@ -3,9 +3,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Alert, Image, TouchableWithoutFeedback } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Axios from 'axios';
-import Feather from 'react-native-vector-icons/Feather';
 
-import { MainStackParamList } from '../../../routes/app.routes';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+import { RootParamList } from '../../../routes/app.routes';
 import BackgroundPositionFirstStep from '../../../assets/images/background-localization-first-step.png';
 
 import {
@@ -17,7 +17,6 @@ import {
 } from './styles';
 import PositionCards from './PositionCards';
 import api from '../../../services/api';
-import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
 import {
   parseCurrentAddress,
@@ -47,7 +46,7 @@ type PositionsRouteProp = RouteProp<
 
 type PositionsScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<PositionScreensNavigatorParamList, 'SelectPosition'>,
-  StackNavigationProp<MainStackParamList>
+  StackNavigationProp<RootParamList>
 >;
 
 type Props = {
@@ -55,7 +54,7 @@ type Props = {
   navigation: PositionsScreenNavigationProp;
 };
 
-function SelectPosition({ navigation }: Props) {
+function SelectPosition({ navigation, route }: Props) {
   const [
     currentLocation,
     setCurrentLocation,
@@ -80,7 +79,7 @@ function SelectPosition({ navigation }: Props) {
 
   useEffect(() => {
     getDeviceLocalization();
-  }, []);
+  }, [getDeviceLocalization]);
 
   useEffect(() => {
     async function getProfileLocalization() {
@@ -110,7 +109,7 @@ function SelectPosition({ navigation }: Props) {
 
       setProfileLocation(response.data);
 
-      navigation.navigate('Home', { screen: 'Home' });
+      navigation.navigate('Main', { screen: 'Home' });
     } catch (e) {
       Alert.alert(
         'Ocorreu algum erro',

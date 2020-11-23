@@ -1,4 +1,6 @@
 import { takeLatest, call, put, all, select } from 'redux-saga/effects';
+import { Alert } from 'react-native';
+import { AxiosResponse } from 'axios';
 import api from '../../../services/api';
 import { AuthTypes } from './types';
 import * as RootNavigation from '../../../services/RootNavigation';
@@ -12,10 +14,8 @@ import {
   signInRequest,
   signUpRequest,
 } from './actions';
-import { Alert } from 'react-native';
 import { RootState } from '../rootReducer';
 
-import { AxiosResponse } from 'axios';
 import { Roles } from '../user/types';
 
 export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
@@ -26,7 +26,7 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
       refreshToken: string;
       token: string;
       roles: Roles[];
-    }> = yield call(api.post, `/auth/login`, {
+    }> = yield call(api.post, '/auth/login', {
       username,
       password,
     });
@@ -76,7 +76,7 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
   try {
     const { name, username, email, password } = payload;
 
-    yield call(api.post, `/signup`, {
+    yield call(api.post, '/signup', {
       name,
       username,
       email,
@@ -99,7 +99,9 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
 }
 
 /* istanbul ignore next */
-export function signOut() {}
+export function* signOut() {
+  yield null;
+}
 
 export default all([
   takeLatest('persist/REHYDRATE', loadToken),

@@ -4,10 +4,31 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Axios from 'axios';
 
-import Button from '../../../components/Button';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+import Button from '../../../components/Button';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import { MainStackParamList } from '../../../routes/app.routes';
+import { RootParamList } from '../../../routes/app.routes';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'relative',
+  },
+
+  map: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
+
+  containerButton: {
+    position: 'absolute',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: '8%',
+    width: Dimensions.get('window').width,
+  },
+});
 
 export interface NominatinResponse {
   place_id: number;
@@ -47,7 +68,7 @@ type Props = {
   route: FindRouteProp;
   navigation: CompositeNavigationProp<
     StackNavigationProp<PositionScreensNavigatorParamList, 'FindPosition'>,
-    StackNavigationProp<MainStackParamList>
+    StackNavigationProp<RootParamList>
   >;
 };
 
@@ -70,10 +91,8 @@ function FindPosition({ route, navigation }: Props) {
   }
 
   async function setProperties(event: MapEvent) {
-    const { coordinate } = event.nativeEvent;
-
-    setCoordinate(coordinate);
-    getProperties(coordinate);
+    setCoordinate(event.nativeEvent.coordinate);
+    getProperties(event.nativeEvent.coordinate);
   }
 
   return (
@@ -110,26 +129,5 @@ function FindPosition({ route, navigation }: Props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-  },
-
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-
-  containerButton: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    bottom: '8%',
-    width: Dimensions.get('window').width,
-  },
-});
 
 export default FindPosition;

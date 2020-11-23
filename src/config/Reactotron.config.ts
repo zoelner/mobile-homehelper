@@ -2,12 +2,6 @@ import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 import sagaPlugin from 'reactotron-redux-saga';
 
-declare global {
-  interface Console {
-    tron: any;
-  }
-}
-
 if (__DEV__) {
   const tron = Reactotron.configure()
     .useReactNative()
@@ -15,6 +9,7 @@ if (__DEV__) {
     .use(sagaPlugin({ except: [''] }))
     .connect();
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   tron.clear!();
 
   console.tron = tron;
