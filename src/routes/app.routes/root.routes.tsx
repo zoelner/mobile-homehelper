@@ -8,7 +8,7 @@ import PositionScreens, {
 
 import ServiceScreens, {
   ServiceScreensNavigatorParamList,
-} from '../../pages/ServiceScreens';
+} from '../../pages/ServiceScreens/ServiceScreens';
 
 import MainTabs, { MainParamList } from './main.routes';
 
@@ -28,6 +28,7 @@ function Root() {
         component={MainTabs}
         options={{
           headerShown: false,
+          title: 'Home',
         }}
       />
       <Stack.Screen

@@ -24,7 +24,8 @@ import {
 } from '../../../utils/parsers';
 import { NominatinResponse } from '../FindPosition';
 
-interface Profile {
+export interface UserProfileType {
+  id: number;
   name: string;
   email: string;
   cpf: string;
@@ -36,6 +37,12 @@ interface Profile {
     zipCode: string;
     latitude: number;
     longitude: number;
+  };
+  image?: {
+    mobile: {
+      name: string;
+      url: string;
+    };
   };
 }
 
@@ -60,7 +67,10 @@ function SelectPosition({ navigation, route }: Props) {
     setCurrentLocation,
   ] = useState<NominatinResponse | null>(null);
 
-  const [profileLocation, setProfileLocation] = useState<Profile | null>(null);
+  const [
+    profileLocation,
+    setProfileLocation,
+  ] = useState<UserProfileType | null>(null);
 
   const getDeviceLocalization = useCallback(() => {
     Geolocation.getCurrentPosition(
@@ -83,7 +93,7 @@ function SelectPosition({ navigation, route }: Props) {
 
   useEffect(() => {
     async function getProfileLocalization() {
-      const response = await api.get<Profile>('/profile');
+      const response = await api.get<UserProfileType>('/profile');
 
       setProfileLocation(response.data);
     }
@@ -105,7 +115,10 @@ function SelectPosition({ navigation, route }: Props) {
 
       const callMethod = profileLocation ? 'put' : 'post';
 
-      const response = await api[callMethod]<Profile>('/profile', payload);
+      const response = await api[callMethod]<UserProfileType>(
+        '/profile',
+        payload,
+      );
 
       setProfileLocation(response.data);
 

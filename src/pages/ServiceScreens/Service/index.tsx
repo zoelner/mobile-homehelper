@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { differenceInDays, parseISO } from 'date-fns';
 
-import api from '../../services/api';
-import { RootParamList } from '../../routes/app.routes';
+import api from '../../../services/api';
+import { RootParamList } from '../../../routes/app.routes';
 
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 
-import { ServiceType } from '../Dashboard/ServiceItem';
+import { ServiceType } from '../../Dashboard/ServiceItem';
 import {
   Container,
   ServiceList,
@@ -67,13 +68,25 @@ function Service({ route, navigation }: Props) {
         keyExtractor={(service) => String(service.id)}
         renderItem={({ item }) => {
           return (
-            <ServiceItem>
-              <ServiceItemImage source={{ uri: item.image.mobile.url }} />
-              <ServiceItemBoxText>
-                <ServiceItemText>{item.name}</ServiceItemText>
-                <ServiceItemWarning>{item.status}</ServiceItemWarning>
-              </ServiceItemBoxText>
-            </ServiceItem>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                navigation.navigate('ServiceScreens', {
+                  screen: 'ProfessionalsList',
+                  params: {
+                    id: item.id,
+                    serviceName: item.name,
+                  },
+                });
+              }}
+            >
+              <ServiceItem>
+                <ServiceItemImage source={{ uri: item.image.mobile.url }} />
+                <ServiceItemBoxText>
+                  <ServiceItemText>{item.name}</ServiceItemText>
+                  <ServiceItemWarning>{item.status}</ServiceItemWarning>
+                </ServiceItemBoxText>
+              </ServiceItem>
+            </TouchableWithoutFeedback>
           );
         }}
       />
