@@ -1,6 +1,6 @@
 import ServiceScreens, {
   ServiceScreensNavigatorParamList,
-} from './Servicescreens';
+} from './ServiceScreens';
 
 export type { ServiceScreensNavigatorParamList };
 
