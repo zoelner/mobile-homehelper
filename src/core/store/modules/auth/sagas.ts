@@ -38,7 +38,14 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
     AsyncStorage.setItem(Configuration.AUTH.KEY_REFRESH_TOKEN, token);
     AsyncStorage.setItem(Configuration.AUTH.KEY_TOKEN, refreshToken);
 
-    yield put(signInSuccess({ roles }));
+    const responseProfile: AxiosResponse<ProfileType> = yield call(
+      api.get,
+      '/profile',
+    );
+
+    const profile = responseProfile.data;
+
+    yield put(signInSuccess({ roles, profile }));
   } catch (err) {
     Alert.alert(
       'Falha na autenticação',

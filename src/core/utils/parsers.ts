@@ -8,12 +8,10 @@ export function parseCurrentAddress(
 }
 
 export function parseProfileAddress(
-  streetName: string | undefined,
-  number: string | undefined,
-  complement: string | undefined,
+  data: AddressType = {} as AddressType,
 ): string {
-  if (!streetName) return 'Carregando...';
-  if (!Number(number)) return streetName;
+  if (!data.streetName) return 'Desconhecido';
+  if (data.number && !Number(data.number)) return data.streetName;
 
-  return `${streetName},  ${number} - ${complement}`;
+  return `${data.streetName},  ${data.number} - ${data.complement}`;
 }

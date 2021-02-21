@@ -12,10 +12,11 @@ export const signInRequest = ({ username, password }: SignInRequestParams) =>
 
 interface SignInSuccessParams {
   roles: Roles[];
+  profile: ProfileType;
 }
 
-export const signInSuccess = ({ roles }: SignInSuccessParams) =>
-  action(AuthTypes.SIGN_IN_SUCCESS, { roles });
+export const signInSuccess = ({ roles, profile }: SignInSuccessParams) =>
+  action(AuthTypes.SIGN_IN_SUCCESS, { roles, profile });
 
 interface SignUpRequestParams {
   name: string;

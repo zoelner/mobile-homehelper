@@ -1,10 +1,11 @@
+import React, { useRef } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Form } from '@unform/mobile';
-import React, { useRef } from 'react';
 import { View, Text, SafeAreaView, Alert } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { FormHandles } from '@unform/core';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Input from '~/components/Input';
 import Button from '~/components/Button';
@@ -14,6 +15,7 @@ import { RootParamList } from '~/core/routes/app.routes';
 import api from '~/core/services/api';
 
 import styles from './styles';
+import { updateProfile } from '~/core/store/modules/user/actions';
 
 type ConfirmRouteProp = RouteProp<
   PositionScreensNavigatorParamList,
@@ -35,6 +37,7 @@ interface ConfirmPositionFormData {
 
 function ConfirmPosition({ navigation, route }: Props) {
   const formRef = useRef<FormHandles>(null);
+  const dispatch = useDispatch();
 
   const { data, isNew } = route.params;
   const { address, lon, lat } = data;
@@ -43,7 +46,7 @@ function ConfirmPosition({ navigation, route }: Props) {
     try {
       const callMethod = isNew ? 'post' : 'put';
 
-      const response = await api[callMethod]('/profile/address', {
+      const response = await api[callMethod]<ProfileType>('/profile/address', {
         address: {
           streetName: address.road,
           zipCode: address.postcode,
@@ -54,7 +57,7 @@ function ConfirmPosition({ navigation, route }: Props) {
         },
       });
 
-      response.data;
+      dispatch(updateProfile({ profile: response.data }));
 
       navigation.navigate('Main', {
         screen: 'Home',

@@ -7,7 +7,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import { RootParamList } from '~/core/routes/app.routes';
 import ProfileBlank from '~/assets/images/profile.png';
 
-import { UserProfileType } from '../../PositionScreens/SelectPosition';
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 
 import {
@@ -21,7 +20,7 @@ import {
   Description,
 } from './styles';
 
-export interface ProfessionalProfileType extends UserProfileType {
+export interface ProfessionalProfileType extends ProfileType {
   descripton: string;
   categories: CategoryType[];
 }

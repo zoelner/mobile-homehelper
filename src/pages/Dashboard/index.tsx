@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { useSelector } from 'react-redux';
 
 import { RootParamList } from '~/core/routes/app.routes';
 import api from '~/core/services/api';
+
+import { parseProfileAddress } from '~/core/utils/parsers';
 
 import {
   Container,
@@ -19,6 +22,7 @@ import {
 
 import CategoryItem from './CategoryItem';
 import ServiceItem from './ServiceItem';
+import { RootState } from '~/core/store/modules/rootReducer';
 
 type Props = BottomTabScreenProps<RootParamList, 'Main'>;
 
@@ -29,6 +33,7 @@ type DashboardState = {
 
 function Dashboard({ navigation }: Props) {
   const [state, setState] = useState<DashboardState>({} as DashboardState);
+  const profile = useSelector((rootState: RootState) => rootState.user.profile);
 
   useEffect(() => {
     async function loadDashboardScreen() {
@@ -68,7 +73,7 @@ function Dashboard({ navigation }: Props) {
           }}
         >
           <HeaderButtonContent>
-            <HeaderText> R. Rio São Francisco</HeaderText>
+            <HeaderText>{parseProfileAddress(profile.address)}</HeaderText>
             <Icon name="keyboard-arrow-down" color="#717171" />
           </HeaderButtonContent>
         </HeaderButton>
