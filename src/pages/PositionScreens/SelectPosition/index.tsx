@@ -5,8 +5,8 @@ import Geolocation from '@react-native-community/geolocation';
 import Axios from 'axios';
 
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
-import { RootParamList } from '../../../routes/app.routes';
-import BackgroundPositionFirstStep from '../../../assets/images/background-localization-first-step.png';
+import { RootParamList } from '~/core/routes/app.routes';
+import BackgroundPositionFirstStep from '~/assets/images/background-localization-first-step.png';
 
 import {
   Container,
@@ -16,12 +16,9 @@ import {
   FakeUserInputText,
 } from './styles';
 import PositionCards from './PositionCards';
-import api from '../../../services/api';
+import api from '~/core/services/api';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import {
-  parseCurrentAddress,
-  parseProfileAddress,
-} from '../../../utils/parsers';
+import { parseCurrentAddress, parseProfileAddress } from '~/core/utils/parsers';
 import { NominatinResponse } from '../FindPosition';
 
 export interface UserProfileType {
@@ -116,7 +113,7 @@ function SelectPosition({ navigation, route }: Props) {
       const callMethod = profileLocation ? 'put' : 'post';
 
       const response = await api[callMethod]<UserProfileType>(
-        '/profile',
+        '/profile/address',
         payload,
       );
 

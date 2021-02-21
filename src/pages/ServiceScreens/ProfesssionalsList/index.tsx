@@ -3,12 +3,12 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TouchableWithoutFeedback } from 'react-native';
 
-import { RootParamList } from '../../../routes/app.routes';
+import { RootParamList } from '~/core/routes/app.routes';
+import api from '~/core/services/api';
+import ProfileBlank from '~/assets/images/profile.png';
+
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 import { ProfessionalProfileType } from '../ProfessionalProfile';
-import api from '../../../services/api';
-
-import ProfileBlank from '../../../assets/images/profile.png';
 
 import {
   Container,

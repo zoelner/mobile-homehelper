@@ -1,9 +1,6 @@
 import styled from 'styled-components/native';
 import { Dimensions, FlatList, SafeAreaView } from 'react-native';
 
-import { CategoryType } from './CategoryItem';
-import { ServiceType } from './ServiceItem';
-
 export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: #fff;

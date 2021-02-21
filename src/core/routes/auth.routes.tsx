@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SignIn from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
-import HeaderRight from '../components/HeaderRight';
+import SignIn from '~/pages/SignIn';
+import SignUp from '~/pages/SignUp';
+import HeaderRight from '~/components/HeaderRight';
 
 const RootNavigator = createStackNavigator();
 

@@ -2,7 +2,7 @@ import React from 'react';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Dashboard from '../../pages/Dashboard';
+import Dashboard from '~/pages/Dashboard';
 
 export type MainParamList = {
   Home: undefined;
