@@ -8,8 +8,6 @@ import * as Actions from './actions';
 export type AuthActions = ActionType<typeof Actions>;
 
 export const INITIAL_STATE: AuthState = {
-  token: null,
-  refreshToken: null,
   signed: false,
   loading: false,
 };
@@ -30,17 +28,7 @@ export default function auth(
         break;
       }
 
-      case AuthTypes.REFRESH_TOKEN_SUCCESS: {
-        const { token } = action.payload;
-        draft.token = token;
-        break;
-      }
-
       case AuthTypes.SIGN_IN_SUCCESS: {
-        const { refreshToken, token } = action.payload;
-
-        draft.token = token;
-        draft.refreshToken = refreshToken;
         draft.signed = true;
         draft.loading = false;
         break;
@@ -48,8 +36,6 @@ export default function auth(
 
       case AuthTypes.SIGN_FAILURE:
       case AuthTypes.SIGN_OUT: {
-        draft.token = null;
-        draft.refreshToken = null;
         draft.signed = false;
         draft.loading = false;
         break;
