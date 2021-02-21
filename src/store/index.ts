@@ -7,7 +7,12 @@ import persistReducers from './persistReducers';
 import rootReducer from './modules/rootReducer';
 import rootSaga from './modules/rootSaga';
 
-const sagaMonitor = __DEV__ ? console.tron.createSagaMonitor() : null;
+import Reactotron from '../config/Reactotron.config';
+
+const sagaMonitor =
+  __DEV__ && Reactotron.createSagaMonitor
+    ? Reactotron.createSagaMonitor()
+    : undefined;
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
 const middlewares = [sagaMiddleware];

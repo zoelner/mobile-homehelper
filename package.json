@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-async-storage/async-storage": "^1.13.4",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.1",
@@ -19,6 +19,7 @@
     "@unform/core": "^2.1.0",
     "@unform/mobile": "^2.1.0",
     "axios": "^0.19.2",
+    "axios-auth-refresh": "^3.1.0",
     "date-fns": "^2.16.1",
     "immer": "^7.0.1",
     "polished": "^4.0.3",

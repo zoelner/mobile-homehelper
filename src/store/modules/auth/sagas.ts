@@ -1,20 +1,20 @@
-import { takeLatest, call, put, all, select } from 'redux-saga/effects';
+import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 import { AxiosResponse } from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import api from '../../../services/api';
 import { AuthTypes } from './types';
 import * as RootNavigation from '../../../services/RootNavigation';
+import Configuration from '../../../config/configuration';
 
 import {
   signInSuccess,
   signFailure,
-  refreshTokenSuccess,
-  refreshTokenFailure,
   signUpSuccess,
   signInRequest,
   signUpRequest,
 } from './actions';
-import { RootState } from '../rootReducer';
 
 import { Roles } from '../user/types';
 
@@ -35,40 +35,16 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess({ refreshToken, token, roles }));
+    AsyncStorage.setItem(Configuration.AUTH.KEY_REFRESH_TOKEN, token);
+    AsyncStorage.setItem(Configuration.AUTH.KEY_TOKEN, refreshToken);
+
+    yield put(signInSuccess({ roles }));
   } catch (err) {
     Alert.alert(
       'Falha na autenticação',
       'Houve um erro no login, verifique seus dados',
     );
     yield put(signFailure());
-  }
-}
-
-export function* loadToken() {
-  const token = yield select((state) => state.auth.token);
-
-  if (!token) return;
-
-  api.defaults.headers.Authorization = `Bearer ${token}`;
-}
-
-export function* getRefreshToken() {
-  try {
-    const loadedRefreshToken = yield select(
-      (state: RootState) => state.auth.refreshToken,
-    );
-    const response = yield call(api.post, '/auth/token', {
-      refreshToken: `${loadedRefreshToken}`,
-    });
-
-    const { token } = response.data;
-
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
-    yield put(refreshTokenSuccess({ token }));
-  } catch (error) {
-    yield put(refreshTokenFailure());
   }
 }
 
@@ -81,7 +57,7 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
       username,
       email,
       password,
-      professional: true,
+      professional: false,
     });
 
     Alert.alert(
@@ -104,9 +80,7 @@ export function* signOut() {
 }
 
 export default all([
-  takeLatest('persist/REHYDRATE', loadToken),
   takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
   takeLatest(AuthTypes.SIGN_UP_REQUEST, signUp),
-  takeLatest(AuthTypes.REFRESH_TOKEN_REQUEST, getRefreshToken),
   takeLatest(AuthTypes.SIGN_OUT, signOut),
 ]);
