@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Container, Image, ServiceText } from './styles';
-import { ServiceType } from '../interfaces';
 
 export interface ServiceItemProps {
   data: ServiceType;

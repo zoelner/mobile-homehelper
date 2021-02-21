@@ -2,7 +2,6 @@ import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { Container, Image, CategoryText } from './styles';
-import { CategoryType } from '../interfaces';
 
 export interface CategoryItemProps {
   data: CategoryType;
