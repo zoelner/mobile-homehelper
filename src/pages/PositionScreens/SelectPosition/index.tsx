@@ -3,8 +3,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Alert, Image, TouchableWithoutFeedback } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Axios from 'axios';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+
 import { RootParamList } from '~/core/routes/app.routes';
 import BackgroundPositionFirstStep from '~/assets/images/background-localization-first-step.png';
 
@@ -20,28 +21,8 @@ import api from '~/core/services/api';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
 import { parseCurrentAddress, parseProfileAddress } from '~/core/utils/parsers';
 import { NominatinResponse } from '../FindPosition';
-
-export interface UserProfileType {
-  id: number;
-  name: string;
-  email: string;
-  cpf: string;
-  phoneNumber: string;
-  address: {
-    streetName: string;
-    number: string;
-    complement: string;
-    zipCode: string;
-    latitude: number;
-    longitude: number;
-  };
-  image?: {
-    mobile: {
-      name: string;
-      url: string;
-    };
-  };
-}
+import { updateProfile } from '~/core/store/modules/user/actions';
+import { RootState } from '~/core/store/modules/rootReducer';
 
 type PositionsRouteProp = RouteProp<
   PositionScreensNavigatorParamList,
@@ -59,15 +40,14 @@ type Props = {
 };
 
 function SelectPosition({ navigation, route }: Props) {
+  const profile = useSelector((state: RootState) => state.user.profile);
+
   const [
     currentLocation,
     setCurrentLocation,
   ] = useState<NominatinResponse | null>(null);
 
-  const [
-    profileLocation,
-    setProfileLocation,
-  ] = useState<UserProfileType | null>(null);
+  const dispatch = useDispatch();
 
   const getDeviceLocalization = useCallback(() => {
     Geolocation.getCurrentPosition(
@@ -88,36 +68,28 @@ function SelectPosition({ navigation, route }: Props) {
     getDeviceLocalization();
   }, [getDeviceLocalization]);
 
-  useEffect(() => {
-    async function getProfileLocalization() {
-      const response = await api.get<UserProfileType>('/profile');
-
-      setProfileLocation(response.data);
-    }
-
-    getProfileLocalization();
-  }, []);
-
   async function setCurrentLocalization() {
+    if (!currentLocation) return;
+
     try {
       const payload = {
         address: {
-          streetName: currentLocation?.address.road,
-          zipCode: currentLocation?.address.postcode,
-          latitude: currentLocation?.lat,
-          longitude: currentLocation?.lon,
+          streetName: currentLocation.address.road,
+          zipCode: currentLocation.address.postcode,
+          latitude: currentLocation.lat,
+          longitude: currentLocation.lon,
           number: 0,
         },
       };
 
-      const callMethod = profileLocation ? 'put' : 'post';
+      const callMethod = profile?.address ? 'put' : 'post';
 
-      const response = await api[callMethod]<UserProfileType>(
+      const response = await api[callMethod]<ProfileType>(
         '/profile/address',
         payload,
       );
 
-      setProfileLocation(response.data);
+      dispatch(updateProfile({ profile: response.data }));
 
       navigation.navigate('Main', { screen: 'Home' });
     } catch (e) {
@@ -136,7 +108,7 @@ function SelectPosition({ navigation, route }: Props) {
     if (!currentLocation) return;
     navigation.navigate('FindPosition', {
       data: currentLocation,
-      isNew: !profileLocation,
+      isNew: !profile?.address,
     });
   }
 
@@ -170,11 +142,7 @@ function SelectPosition({ navigation, route }: Props) {
       <PositionCards
         icon="navigation-2"
         title="Casa"
-        subtitle={parseProfileAddress(
-          profileLocation?.address.streetName,
-          profileLocation?.address.number,
-          profileLocation?.address.complement,
-        )}
+        subtitle={parseProfileAddress(profile.address)}
         onPress={() => navigation.goBack()}
         active
       />

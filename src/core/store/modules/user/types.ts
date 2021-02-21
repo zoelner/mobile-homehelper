@@ -5,6 +5,10 @@ export enum Roles {
 }
 
 export type UserState = {
-  profile: null;
+  profile: ProfileType;
   roles: Roles[];
 };
+
+export enum UserTypes {
+  UPDATE_PROFILE = 'UPDATE_PROFILE',
+}

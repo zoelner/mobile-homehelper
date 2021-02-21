@@ -48,6 +48,7 @@ function Service({ route, navigation }: Props) {
           return {
             ...service,
             status:
+              service.createdAt &&
               differenceInDays(new Date(), parseISO(service.createdAt)) < 30
                 ? 'Novo'
                 : 'Consolidado',
