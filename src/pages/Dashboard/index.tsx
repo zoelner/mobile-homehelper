@@ -3,9 +3,8 @@ import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-import api from '../../services/api';
-
-import { RootParamList } from '../../routes/app.routes';
+import { RootParamList } from '~/routes/app.routes';
+import api from '~/services/api';
 
 import {
   Container,
@@ -20,7 +19,6 @@ import {
 
 import CategoryItem from './CategoryItem';
 import ServiceItem from './ServiceItem';
-import { CategoryType, ServiceType } from './interfaces';
 
 type Props = BottomTabScreenProps<RootParamList, 'Main'>;
 

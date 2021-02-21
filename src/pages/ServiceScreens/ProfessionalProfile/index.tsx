@@ -5,7 +5,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Feather from 'react-native-vector-icons/Feather';
 
 import { UserProfileType } from '../../PositionScreens/SelectPosition';
-import { CategoryType } from '../../Dashboard/CategoryItem';
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 import { RootParamList } from '../../../routes/app.routes';
 

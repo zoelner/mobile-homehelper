@@ -4,8 +4,8 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { differenceInDays, parseISO } from 'date-fns';
 
-import api from '../../../services/api';
-import { RootParamList } from '../../../routes/app.routes';
+import api from '~/services/api';
+import { RootParamList } from '~/routes/app.routes';
 
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 
@@ -18,7 +18,6 @@ import {
   ServiceItemText,
   ServiceItemWarning,
 } from './styles';
-import { ServiceType } from '../../Dashboard/interfaces';
 
 type ServiceRouteProp = RouteProp<ServiceScreensNavigatorParamList, 'Service'>;
 

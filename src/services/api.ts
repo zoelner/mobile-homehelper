@@ -2,8 +2,8 @@ import axios, { AxiosError } from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Configuration from '../config/configuration';
-import Reactotron from '../config/Reactotron.config';
+import Configuration from '~/config/configuration';
+import Reactotron from '~/config/Reactotron.config';
 
 const api = axios.create({
   baseURL: 'https://api-homehelper.herokuapp.com/api',

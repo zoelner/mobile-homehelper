@@ -10,12 +10,14 @@ import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import { useDispatch } from 'react-redux';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
+
+import Button from '~/components/Button';
+import Input from '~/components/Input';
+
+import getValidationError from '~/utils/getValidationError';
+import { signUpRequest } from '~/store/modules/auth/actions';
 
 import { Container, Title, SubTitle, InputContainer } from './styles';
-import getValidationError from '../../utils/getValidationError';
-import { signUpRequest } from '../../store/modules/auth/actions';
 
 interface SignUpFormData {
   name: string;
