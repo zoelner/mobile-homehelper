@@ -6,12 +6,12 @@ import MapView, { Marker } from 'react-native-maps';
 import { FormHandles } from '@unform/core';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
+import Input from '~/components/Input';
+import Button from '~/components/Button';
 
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import { RootParamList } from '../../../routes/app.routes';
-import api from '../../../services/api';
+import { RootParamList } from '~/core/routes/app.routes';
+import api from '~/core/services/api';
 
 import styles from './styles';
 

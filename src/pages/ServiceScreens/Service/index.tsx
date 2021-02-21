@@ -4,8 +4,8 @@ import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { differenceInDays, parseISO } from 'date-fns';
 
-import api from '~/services/api';
-import { RootParamList } from '~/routes/app.routes';
+import api from '~/core/services/api';
+import { RootParamList } from '~/core/routes/app.routes';
 
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 

@@ -3,8 +3,8 @@ import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-import { RootParamList } from '~/routes/app.routes';
-import api from '~/services/api';
+import { RootParamList } from '~/core/routes/app.routes';
+import api from '~/core/services/api';
 
 import {
   Container,

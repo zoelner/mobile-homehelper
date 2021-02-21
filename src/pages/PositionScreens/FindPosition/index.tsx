@@ -5,9 +5,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import Axios from 'axios';
 
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
-import Button from '../../../components/Button';
+
+import Button from '~/components/Button';
+import { RootParamList } from '~/core/routes/app.routes';
+
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import { RootParamList } from '../../../routes/app.routes';
 
 const styles = StyleSheet.create({
   container: {

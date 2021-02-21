@@ -14,8 +14,8 @@ import { useDispatch } from 'react-redux';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 
-import getValidationError from '~/utils/getValidationError';
-import { signUpRequest } from '~/store/modules/auth/actions';
+import getValidationError from '~/core/utils/getValidationError';
+import { signUpRequest } from '~/core/store/modules/auth/actions';
 
 import { Container, Title, SubTitle, InputContainer } from './styles';
 

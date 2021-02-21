@@ -15,11 +15,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 
-import './config/Reactotron.config';
+import '~/core/config/Reactotron.config';
 
-import { store, persistor } from './store';
-import Routes from './routes';
-import { navigationRef } from './services/RootNavigation';
+import { store, persistor } from '~/core/store';
+import Routes from '~/core/routes';
+import { navigationRef } from '~/core/services/RootNavigation';
 
 function App() {
   return (

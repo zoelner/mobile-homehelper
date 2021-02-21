@@ -10,8 +10,8 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import { useDispatch } from 'react-redux';
 
-import getValidationError from '~/utils/getValidationError';
-import { signInRequest } from '~/store/modules/auth/actions';
+import getValidationError from '~/core/utils/getValidationError';
+import { signInRequest } from '~/core/store/modules/auth/actions';
 
 import Button from '~/components/Button';
 import Input from '~/components/Input';

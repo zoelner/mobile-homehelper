@@ -4,11 +4,11 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 
 import PositionScreens, {
   PositionScreensNavigatorParamList,
-} from '../../pages/PositionScreens';
+} from '~/pages/PositionScreens';
 
 import ServiceScreens, {
   ServiceScreensNavigatorParamList,
-} from '../../pages/ServiceScreens/ServiceScreens';
+} from '~/pages/ServiceScreens/ServiceScreens';
 
 import MainTabs, { MainParamList } from './main.routes';
 

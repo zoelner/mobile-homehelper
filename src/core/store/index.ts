@@ -1,7 +1,7 @@
 import { persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 
-import Reactotron from '~/config/Reactotron.config';
+import Reactotron from '~/core/config/Reactotron.config';
 
 import createStore from './createStore';
 import persistReducers from './persistReducers';
