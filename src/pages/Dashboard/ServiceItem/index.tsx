@@ -1,22 +1,7 @@
 import React from 'react';
 
-import { CategoryType } from '../CategoryItem';
-
 import { Container, Image, ServiceText } from './styles';
-
-export interface ServiceType {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  category: CategoryType;
-  image: {
-    mobile: {
-      name: string;
-      url: string;
-    };
-  };
-}
+import { ServiceType } from '../interfaces';
 
 export interface ServiceItemProps {
   data: ServiceType;

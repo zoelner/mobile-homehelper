@@ -43,7 +43,7 @@ function ConfirmPosition({ navigation, route }: Props) {
     try {
       const callMethod = isNew ? 'post' : 'put';
 
-      const response = await api[callMethod]('/profile', {
+      const response = await api[callMethod]('/profile/address', {
         address: {
           streetName: address.road,
           zipCode: address.postcode,

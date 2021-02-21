@@ -9,7 +9,6 @@ import { RootParamList } from '../../../routes/app.routes';
 
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
 
-import { ServiceType } from '../../Dashboard/ServiceItem';
 import {
   Container,
   ServiceList,
@@ -19,6 +18,7 @@ import {
   ServiceItemText,
   ServiceItemWarning,
 } from './styles';
+import { ServiceType } from '../../Dashboard/interfaces';
 
 type ServiceRouteProp = RouteProp<ServiceScreensNavigatorParamList, 'Service'>;
 

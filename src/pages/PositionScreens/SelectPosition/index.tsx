@@ -116,7 +116,7 @@ function SelectPosition({ navigation, route }: Props) {
       const callMethod = profileLocation ? 'put' : 'post';
 
       const response = await api[callMethod]<UserProfileType>(
-        '/profile',
+        '/profile/address',
         payload,
       );
 

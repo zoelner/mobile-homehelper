@@ -18,31 +18,38 @@ import {
   Title,
 } from './styles';
 
-import CategoryItem, { CategoryType } from './CategoryItem';
-import ServiceItem, { ServiceType } from './ServiceItem';
+import CategoryItem from './CategoryItem';
+import ServiceItem from './ServiceItem';
+import { CategoryType, ServiceType } from './interfaces';
 
 type Props = BottomTabScreenProps<RootParamList, 'Main'>;
 
+type DashboardState = {
+  categories: CategoryType[];
+  services: ServiceType[];
+};
+
 function Dashboard({ navigation }: Props) {
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [services, setService] = useState<ServiceType[]>([]);
+  const [state, setState] = useState<DashboardState>({} as DashboardState);
 
   useEffect(() => {
-    async function getCategories() {
+    async function loadDashboardScreen() {
       try {
         const [categoriesResponse, servicesResponse] = await Promise.all([
           api.get<CategoryType[]>('category'),
           api.get<ServiceType[]>('servicetype'),
         ]);
 
-        setCategories(categoriesResponse.data);
-        setService(servicesResponse.data);
+        setState({
+          categories: categoriesResponse.data,
+          services: servicesResponse.data,
+        });
       } catch (error) {
         Alert.alert('Não foi possivel obter as categorias.');
       }
     }
 
-    getCategories();
+    loadDashboardScreen();
   }, []);
 
   function navigateToCategory(id: number) {
@@ -70,7 +77,7 @@ function Dashboard({ navigation }: Props) {
       </Header>
 
       <CategoryList
-        data={categories}
+        data={state.categories}
         keyExtractor={(category) => String(category.id)}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -82,7 +89,7 @@ function Dashboard({ navigation }: Props) {
       <Title>Serviços</Title>
 
       <ServiceList
-        data={services}
+        data={state.services}
         keyExtractor={(service) => String(service.id)}
         numColumns={2}
         renderItem={({ item: service }) => <ServiceItem data={service} />}
