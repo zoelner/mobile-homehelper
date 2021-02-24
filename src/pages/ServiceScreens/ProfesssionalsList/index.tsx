@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { TouchableWithoutFeedback } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import { RootParamList } from '~/core/routes/app.routes';
 import api from '~/core/services/api';
 import ProfileBlank from '~/assets/images/profile.png';
 
 import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
-import { ProfessionalProfileType } from '../ProfessionalProfile';
 
 import {
   Container,
@@ -19,6 +19,7 @@ import {
   ProfessionalItemText,
   ProfessionalItemDescription,
 } from './styles';
+import { RootState } from '~/core/store/modules/rootReducer';
 
 type ProfileRouteProp = RouteProp<
   ServiceScreensNavigatorParamList,
@@ -40,26 +41,33 @@ function ProfesssionalsList({ route, navigation }: Props) {
     [],
   );
 
+  const latitude = useSelector(
+    (state: RootState) => state.user.profile.address?.latitude,
+  );
+  const longitude = useSelector(
+    (state: RootState) => state.user.profile.address?.longitude,
+  );
+
   useEffect(() => {
     async function loadProfessionals() {
+      if (!latitude || !longitude) return;
+
       const params = new URLSearchParams();
       params.append('serviceTypeID', String(route.params.id));
       params.append('distance', '15');
-      params.append('latitude', '-25.514685');
-      params.append('longitude', '-49.326704');
+      params.append('latitude', String(latitude));
+      params.append('longitude', String(longitude));
 
       const response = await api.get<{ professionals: ProfessionalListType[] }>(
         '/professionals',
-        {
-          params,
-        },
+        { params },
       );
 
       setProfessionals(response.data.professionals);
     }
 
     loadProfessionals();
-  }, [route.params.id]);
+  }, [route.params.id, latitude, longitude]);
 
   return (
     <Container>
@@ -90,7 +98,7 @@ function ProfesssionalsList({ route, navigation }: Props) {
                     numberOfLines={2}
                     ellipsizeMode="tail"
                   >
-                    {item.descripton}
+                    {item.description}
                   </ProfessionalItemDescription>
                 </ProfessionalItemBoxText>
               </ProfessionalItem>

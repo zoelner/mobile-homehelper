@@ -4,8 +4,12 @@ type ProfileType = {
   email: string;
   cpf: string;
   phoneNumber: string;
-  descripton?: string;
+  description?: string;
   services: ServiceType[];
   address?: AddressType;
   image?: ImageType;
 };
+
+interface ProfessionalProfileType extends ProfileType {
+  categories: CategoryType[];
+}
