@@ -62,6 +62,16 @@ function Dashboard({ navigation }: Props) {
     });
   }
 
+  function navigateToProfessionals(item: ServiceType) {
+    navigation.navigate('ServiceScreens', {
+      screen: 'ProfessionalsList',
+      params: {
+        id: item.id,
+        serviceName: item.name,
+      },
+    });
+  }
+
   return (
     <Container>
       <Header>
@@ -95,7 +105,9 @@ function Dashboard({ navigation }: Props) {
         data={state.services}
         keyExtractor={(service) => String(service.id)}
         numColumns={2}
-        renderItem={({ item: service }) => <ServiceItem data={service} />}
+        renderItem={({ item: service }) => (
+          <ServiceItem data={service} onPress={navigateToProfessionals} />
+        )}
       />
     </Container>
   );

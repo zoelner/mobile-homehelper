@@ -61,6 +61,16 @@ function Service({ route, navigation }: Props) {
     loadServices();
   }, [id]);
 
+  function navigateToProfessionals(item: ServiceType) {
+    navigation.navigate('ServiceScreens', {
+      screen: 'ProfessionalsList',
+      params: {
+        id: item.id,
+        serviceName: item.name,
+      },
+    });
+  }
+
   return (
     <Container>
       <ServiceList
@@ -69,15 +79,7 @@ function Service({ route, navigation }: Props) {
         renderItem={({ item }) => {
           return (
             <TouchableWithoutFeedback
-              onPress={() => {
-                navigation.navigate('ServiceScreens', {
-                  screen: 'ProfessionalsList',
-                  params: {
-                    id: item.id,
-                    serviceName: item.name,
-                  },
-                });
-              }}
+              onPress={() => navigateToProfessionals(item)}
             >
               <ServiceItem>
                 <ServiceItemImage source={{ uri: item.image.mobile.url }} />

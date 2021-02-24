@@ -20,11 +20,6 @@ import {
   Description,
 } from './styles';
 
-export interface ProfessionalProfileType extends ProfileType {
-  descripton: string;
-  categories: CategoryType[];
-}
-
 type ProfileRouteProp = RouteProp<
   ServiceScreensNavigatorParamList,
   'ProfessionalProfile'
@@ -76,7 +71,7 @@ function ProfessionalProfile({ route, navigation }: Props) {
 
         {/* </LabelWrapper> */}
         <DescriptionContainer>
-          <Description>{professional.descripton}</Description>
+          <Description>{professional.description}</Description>
         </DescriptionContainer>
       </Container>
     </SafeAreaView>
