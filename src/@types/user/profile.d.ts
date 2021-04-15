@@ -7,7 +7,7 @@ type ProfileType = {
   description?: string;
   services: ServiceType[];
   address?: AddressType;
-  image?: ImageType;
+  image?: ImageContent;
 };
 
 interface ProfessionalProfileType extends ProfileType {

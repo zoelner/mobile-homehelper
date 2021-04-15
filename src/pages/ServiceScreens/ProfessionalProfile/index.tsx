@@ -42,8 +42,8 @@ function ProfessionalProfile({ route, navigation }: Props) {
         <ProfileImageContainer>
           <ProfileImage
             source={
-              professional.image?.mobile.url
-                ? { uri: professional.image?.mobile.url }
+              professional.image?.url
+                ? { uri: professional.image.url }
                 : ProfileBlank
             }
           />
