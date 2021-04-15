@@ -87,9 +87,7 @@ function ProfesssionalsList({ route, navigation }: Props) {
               <ProfessionalItem>
                 <ProfessionalItemImage
                   source={
-                    item.image?.mobile.url
-                      ? { uri: item.image?.mobile.url }
-                      : ProfileBlank
+                    item.image?.url ? { uri: item.image?.url } : ProfileBlank
                   }
                 />
                 <ProfessionalItemBoxText>
