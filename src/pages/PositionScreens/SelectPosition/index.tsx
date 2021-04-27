@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Alert, Image, TouchableWithoutFeedback } from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
-import Axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
+import * as Location from 'expo-location';
 
 import { RootParamList } from '~/core/routes/app.routes';
 import BackgroundPositionFirstStep from '~/assets/images/background-localization-first-step.png';
@@ -20,9 +19,9 @@ import PositionCards from './PositionCards';
 import api from '~/core/services/api';
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
 import { parseCurrentAddress, parseProfileAddress } from '~/core/utils/parsers';
-import { NominatinResponse } from '../FindPosition';
 import { updateProfile } from '~/core/store/modules/user/actions';
 import { RootState } from '~/core/store/modules/rootReducer';
+import { LocationGeocodedAddress, LocationObject } from 'expo-location';
 
 type PositionsRouteProp = RouteProp<
   PositionScreensNavigatorParamList,
@@ -43,42 +42,52 @@ function SelectPosition({ navigation, route }: Props) {
   const profile = useSelector((state: RootState) => state.user.profile);
 
   const [
-    currentLocation,
-    setCurrentLocation,
-  ] = useState<NominatinResponse | null>(null);
+    currentAddress,
+    setCurrentAddress,
+  ] = useState<LocationGeocodedAddress | null>(null);
+
+  const [latLng, setLatLng] = useState<LocationObject | null>(null);
 
   const dispatch = useDispatch();
 
-  const getDeviceLocalization = useCallback(() => {
-    Geolocation.getCurrentPosition(
-      async (info) => {
-        const { latitude, longitude } = info.coords;
+  const getDeviceLocalization = useCallback(async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
 
-        const response = await Axios.get<NominatinResponse>(
-          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
-        );
+    if (status !== 'granted') {
+      Alert.alert(
+        'Sem acesso a localização.',
+        'Precisamos acessar a sua localização, sem ela não podemos continuar',
+      );
+      navigation.goBack();
+      return;
+    }
 
-        setCurrentLocation(response.data);
-      },
-      () => Geolocation.requestAuthorization(),
-    );
-  }, [setCurrentLocation]);
+    let location = await Location.getCurrentPositionAsync({});
+    let geocode = await Location.reverseGeocodeAsync({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    });
+
+    setLatLng(location);
+    setCurrentAddress(geocode[0]);
+  }, []);
 
   useEffect(() => {
     getDeviceLocalization();
   }, [getDeviceLocalization]);
 
   async function setCurrentLocalization() {
-    if (!currentLocation) return;
+    if (!currentAddress) return;
 
     try {
       const payload = {
         address: {
-          streetName: currentLocation.address.road,
-          zipCode: currentLocation.address.postcode,
-          latitude: currentLocation.lat,
-          longitude: currentLocation.lon,
-          number: 0,
+          latitude: latLng!.coords.latitude,
+          longitude: latLng!.coords.longitude,
+          streetName: currentAddress.street,
+          zipCode: currentAddress.postalCode,
+          number: currentAddress.name || 0,
+          neighborhood: currentAddress.subregion || '',
         },
       };
 
@@ -105,9 +114,12 @@ function SelectPosition({ navigation, route }: Props) {
   }
 
   function navigateToFindPosition() {
-    if (!currentLocation) return;
+    if (!latLng?.coords || !currentAddress) return;
     navigation.navigate('FindPosition', {
-      data: currentLocation,
+      data: {
+        latLng: latLng.coords,
+        description: currentAddress,
+      },
       isNew: !profile?.address,
     });
   }
@@ -131,11 +143,7 @@ function SelectPosition({ navigation, route }: Props) {
       <PositionCards
         icon="navigation"
         title="Usar localização atual"
-        subtitle={parseCurrentAddress(
-          currentLocation?.address.road,
-          currentLocation?.address.suburb,
-          currentLocation?.address.city,
-        )}
+        subtitle={parseCurrentAddress(currentAddress || undefined)}
         onPress={setCurrentLocalization}
       />
 

@@ -28,10 +28,9 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
   { name, containerStyle = {}, ...rest },
   ref,
 ) => {
-  const inputElementRef = useRef<TextInputRN>(null);
+  const inputElementRef = useRef<TextInputRN & { value: unknown }>(null);
 
-  const { registerField, defaultValue = '', fieldName, error } = useField(name);
-  const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
+  const { registerField, defaultValue, fieldName, error } = useField(name);
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -50,32 +49,50 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
   }));
 
   useEffect(() => {
-    registerField<string>({
+    if (inputElementRef.current) inputElementRef.current.value = defaultValue;
+  }, [defaultValue]);
+
+  useEffect(() => {
+    registerField({
       name: fieldName,
-      ref: inputValueRef.current,
-      path: 'value',
-      setValue(_, value) {
-        inputValueRef.current.value = value;
-        inputElementRef?.current?.setNativeProps({ text: value });
+      ref: inputElementRef.current,
+      getValue() {
+        if (inputElementRef.current) return inputElementRef.current.value;
+        return '';
+      },
+      setValue(ref, value) {
+        if (inputElementRef.current) {
+          inputElementRef.current.setNativeProps({ text: value });
+          inputElementRef.current.value = value;
+        }
       },
       clearValue() {
-        inputValueRef.current.value = '';
-        inputElementRef?.current?.clear();
+        if (inputElementRef.current) {
+          inputElementRef.current.setNativeProps({ text: '' });
+          inputElementRef.current.value = '';
+        }
       },
     });
   }, [fieldName, registerField]);
 
+  const handleChangeText = (text: unknown) => {
+    if (inputElementRef.current) inputElementRef.current.value = text;
+  };
+
   return (
     <Container style={containerStyle} isFocused={isFocused} isErrored={!!error}>
-      <TextInput
+      <TextInputRN
         ref={inputElementRef}
         defaultValue={defaultValue}
-        onChangeText={(value: string) => {
-          inputValueRef.current.value = value;
-        }}
+        onChangeText={handleChangeText}
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         {...rest}
+        style={{
+          flex: 1,
+          fontSize: 14,
+          color: '#b2b2b2',
+        }}
         placeholderTextColor="#8A8A8F"
       />
     </Container>
