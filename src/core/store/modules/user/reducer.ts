@@ -28,7 +28,10 @@ export default function user(
 
       case UserTypes.UPDATE_PROFILE: {
         const { profile } = action.payload;
-        draft.profile = profile;
+        draft.profile = {
+          ...draft.profile,
+          ...profile,
+        };
         break;
       }
 
