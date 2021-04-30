@@ -3,6 +3,7 @@
   "displayName": "mobile_homehelper",
   "expo": {
     "name": "Mobile Homehelper",
-    "slug": "mobile_homehelper"
+    "slug": "mobile_homehelper",
+    "description": ""
   }
 }
