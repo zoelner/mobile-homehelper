@@ -28,8 +28,4 @@ export const Container = styled.View<ContainerProps>`
     `};
 `;
 
-export const TextInput = styled.TextInput`
-  flex: 1;
-  font-size: 14px;
-  color: #b2b2b2;
-`;
+export const TextInput = styled.TextInput``;

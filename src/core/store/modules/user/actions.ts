@@ -2,7 +2,7 @@ import { action } from 'typesafe-actions';
 import { UserTypes } from './types';
 
 interface UpdateProfile {
-  profile: ProfileType;
+  profile: Partial<ProfileType>;
 }
 
 export const updateProfile = ({ profile }: UpdateProfile) =>

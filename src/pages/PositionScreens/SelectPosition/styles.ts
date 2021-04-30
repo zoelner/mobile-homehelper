@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
-import Feather from 'react-native-vector-icons/Feather';
+import { Feather } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Container = styled.SafeAreaView`
+export const Container = styled(SafeAreaView)`
   flex: 1;
 `;
 

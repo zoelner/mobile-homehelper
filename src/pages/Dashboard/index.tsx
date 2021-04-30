@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 
@@ -84,7 +84,7 @@ function Dashboard({ navigation }: Props) {
         >
           <HeaderButtonContent>
             <HeaderText>{parseProfileAddress(profile.address)}</HeaderText>
-            <Icon name="keyboard-arrow-down" color="#717171" />
+            <MaterialIcons name="keyboard-arrow-down" color="#717171" />
           </HeaderButtonContent>
         </HeaderButton>
       </Header>

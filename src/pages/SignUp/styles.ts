@@ -23,6 +23,6 @@ export const InputContainer = styled.View`
   margin-bottom: 16px;
   width: 300px;
 
-  height: 224px;
+  height: 280px;
   justify-content: space-between;
 `;

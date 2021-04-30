@@ -10,7 +10,7 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
@@ -25,7 +25,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar style="auto" translucent />
         <NavigationContainer ref={navigationRef}>
           <Routes />
         </NavigationContainer>

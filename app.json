@@ -1,4 +1,9 @@
 {
   "name": "mobile_homehelper",
-  "displayName": "mobile_homehelper"
+  "displayName": "mobile_homehelper",
+  "expo": {
+    "name": "Mobile Homehelper",
+    "slug": "mobile_homehelper",
+    "description": ""
+  }
 }

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import MapView, { LatLng, MapEvent, Marker } from 'react-native-maps';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, Text } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StackNavigationProp } from '@react-navigation/stack';
-import Axios from 'axios';
+import * as Location from 'expo-location';
 
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 
@@ -10,16 +11,27 @@ import Button from '~/components/Button';
 import { RootParamList } from '~/core/routes/app.routes';
 
 import { PositionScreensNavigatorParamList } from '../PositionScreens';
+import { LocationGeocodedAddress, LocationObject } from 'expo-location';
+import { parseCurrentAddress } from '~/core/utils/parsers';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
+    alignItems: 'center',
   },
 
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  containerText: {
+    position: 'absolute',
+    top: '8%',
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    padding: 24,
+    fontWeight: 'bold',
   },
 
   containerButton: {
@@ -32,34 +44,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export interface NominatinResponse {
-  place_id: number;
-  licence: string;
-  osm_type: string;
-  osm_id: number;
-  lat: string;
-  lon: string;
-  place_rank: number;
-  category: string;
-  type: string;
-  importance: number;
-  addresstype: string;
-  name: string;
-  display_name: string;
-  address: {
-    road: string;
-    suburb: string;
-    city: string;
-    municipality: string;
-    county: string;
-    state_district: string;
-    state: string;
-    region: string;
-    postcode: number;
-    country: string;
-    country_code: string;
-  };
-}
+export type NominatinResponse = {
+  latLng: Pick<LocationObject['coords'], 'latitude' | 'longitude'>;
+  description: LocationGeocodedAddress;
+};
 
 type FindRouteProp = RouteProp<
   PositionScreensNavigatorParamList,
@@ -75,35 +63,52 @@ type Props = {
 };
 
 function FindPosition({ route, navigation }: Props) {
-  const [coordinate, setCoordinate] = useState<LatLng>({
-    latitude: Number(route.params.data.lat),
-    longitude: Number(route.params.data.lon),
-  });
+  const markerRef = useRef<Marker>(null);
 
-  const [description, setDescription] = useState<NominatinResponse>(
-    route.params.data,
+  const [coordinate, setCoordinate] = useState<LatLng>(() =>
+    getCordinate(route.params.data.latLng),
   );
 
-  async function getProperties({ latitude, longitude }: LatLng) {
-    const response = await Axios.get<NominatinResponse>(
-      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
-    );
+  const [description, setDescription] = useState<LocationGeocodedAddress>(
+    route.params.data.description,
+  );
 
-    setDescription(response.data);
+  function getCordinate(
+    data: LatLng | Pick<LocationObject['coords'], 'latitude' | 'longitude'>,
+  ) {
+    let { latitude, longitude } = data;
+
+    const lat = Number(latitude);
+    const lon = Number(longitude);
+
+    return { latitude: lat, longitude: lon };
+  }
+
+  async function getProperties(
+    data: LatLng | Pick<LocationObject['coords'], 'latitude' | 'longitude'>,
+  ) {
+    const { latitude, longitude } = getCordinate(data);
+
+    const geocode = await Location.reverseGeocodeAsync({
+      latitude,
+      longitude,
+    });
+
+    return geocode[0];
   }
 
   async function setProperties(event: MapEvent) {
     setCoordinate(event.nativeEvent.coordinate);
-    getProperties(event.nativeEvent.coordinate);
+    setDescription(await getProperties(event.nativeEvent.coordinate));
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MapView
         style={styles.map}
         region={{
-          latitude: Number(route.params.data.lat),
-          longitude: Number(route.params.data.lon),
+          latitude: Number(route.params.data.latLng.latitude),
+          longitude: Number(route.params.data.latLng.longitude),
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
         }}
@@ -111,16 +116,21 @@ function FindPosition({ route, navigation }: Props) {
         <Marker
           draggable
           coordinate={coordinate}
-          title={description?.address?.road}
-          description={description?.address?.city}
           onDragEnd={setProperties}
+          ref={markerRef}
         />
       </MapView>
+      <View style={styles.containerText}>
+        <Text>{parseCurrentAddress(description)}</Text>
+      </View>
       <View style={styles.containerButton}>
         <Button
           onPress={() => {
             navigation.navigate('ConfirmPosition', {
-              data: description,
+              data: {
+                latLng: coordinate,
+                description,
+              },
               isNew: route.params.isNew,
             });
           }}
@@ -128,7 +138,7 @@ function FindPosition({ route, navigation }: Props) {
           Confirmar
         </Button>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

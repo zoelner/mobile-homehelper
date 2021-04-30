@@ -100,15 +100,14 @@ const SignIn: React.FC = () => {
                 }}
               />
             </InputContainer>
+            <Button
+              onPress={() => {
+                formRef.current?.submitForm();
+              }}
+            >
+              Entrar
+            </Button>
           </Form>
-
-          <Button
-            onPress={() => {
-              formRef.current?.submitForm();
-            }}
-          >
-            Entrar
-          </Button>
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>

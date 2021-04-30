@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { View } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
+import { Feather } from '@expo/vector-icons';
 
 import {
   CurrentLocalization,
@@ -11,7 +11,7 @@ import {
 } from './styles';
 
 interface Props {
-  icon: string;
+  icon: keyof typeof Feather.glyphMap;
   title: string;
   subtitle: string;
   onPress?: () => void;

@@ -1,12 +1,12 @@
 import React from 'react';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import { Feather } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '~/pages/Dashboard';
+import Profile from '~/pages/Profile';
 
 export type MainParamList = {
   Home: undefined;
-  Search: undefined;
   Profile: undefined;
 };
 
@@ -18,6 +18,7 @@ function MainTabs() {
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#41cebb',
+        keyboardHidesTabBar: true,
       }}
     >
       <MainNavigator.Screen
@@ -26,27 +27,17 @@ function MainTabs() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <FeatherIcon name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <MainNavigator.Screen
-        name="Search"
-        component={Dashboard}
-        options={{
-          tabBarLabel: 'Busca',
-          tabBarIcon: ({ color, size }) => (
-            <FeatherIcon name="search" color={color} size={size} />
+            <Feather name="home" color={color} size={size} />
           ),
         }}
       />
       <MainNavigator.Screen
         name="Profile"
-        component={Dashboard}
+        component={Profile}
         options={{
           tabBarLabel: 'Perfil',
           tabBarIcon: ({ color, size }) => (
-            <FeatherIcon name="user" color={color} size={size} />
+            <Feather name="user" color={color} size={size} />
           ),
         }}
       />
