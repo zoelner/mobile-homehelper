@@ -21,15 +21,3 @@ export const FormFieldLabel = styled.Text`
   color: #212121;
   margin: 2px 0;
 `;
-
-export const ProfileImage = styled.Image`
-  height: 150px;
-  width: 150px;
-  border-radius: 75px;
-  resize-mode: cover;
-  align-self: center;
-
-  border-color: #eee;
-  border-width: 2px;
-  margin-top: 16px;
-`;

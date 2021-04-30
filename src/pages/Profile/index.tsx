@@ -14,13 +14,9 @@ import { RootState } from '~/core/store/modules/rootReducer';
 import { updateProfile } from '~/core/store/modules/user/actions';
 import getValidationError from '~/core/utils/getValidationError';
 
-import {
-  Container,
-  Form,
-  FormField,
-  FormFieldLabel,
-  ProfileImage,
-} from './styles';
+import ProfileImage from './ProfileImage';
+
+import { Container, Form, FormField, FormFieldLabel } from './styles';
 
 const schema = Yup.object().shape({
   phoneNumber: Yup.string().required('Telefone obrigatório'),
@@ -80,7 +76,7 @@ function Profile() {
         }}
       >
         <Container>
-          <ProfileImage source={{ uri: data.image?.url }} />
+          <ProfileImage source={data.image?.url} />
           <Form ref={formRef} onSubmit={handleSubmit} initialData={data}>
             <FormField>
               <FormFieldLabel>Nome:</FormFieldLabel>
