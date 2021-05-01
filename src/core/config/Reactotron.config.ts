@@ -4,7 +4,9 @@ import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 import sagaPlugin from 'reactotron-redux-saga';
 
-Reactotron.configure()
+Reactotron.configure({
+  host: '192.168.100.27',
+})
   .useReactNative()
   .use(reactotronRedux())
   .use(sagaPlugin({ except: [''] }));

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 import BackgroundPositionFirstStep from '~/assets/images/background-localization-first-step.png';
 
 import {
@@ -17,7 +17,7 @@ import {
 } from './styles';
 import PositionCards from './PositionCards';
 import api from '~/core/services/api';
-import { PositionScreensNavigatorParamList } from '../PositionScreens';
+import { PositionScreensNavigatorParamList } from '~/navigations/app.routes/positions.routes';
 import { parseCurrentAddress, parseProfileAddress } from '~/core/utils/parsers';
 import { updateProfile } from '~/core/store/modules/user/actions';
 import { RootState } from '~/core/store/modules/rootReducer';

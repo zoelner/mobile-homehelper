@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { SafeAreaView } from 'react-native';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Feather } from '@expo/vector-icons';
 
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 import ProfileBlank from '~/assets/images/profile.png';
 
-import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
+import { ServiceScreensNavigatorParamList } from '~/navigations/app.routes/services.routes';
 
 import {
   Container,
@@ -19,6 +19,9 @@ import {
   DescriptionContainer,
   Description,
 } from './styles';
+import { formatDistanceToNow } from 'date-fns';
+import { parseISO } from 'date-fns/esm';
+import { ptBR } from 'date-fns/locale';
 
 type ProfileRouteProp = RouteProp<
   ServiceScreensNavigatorParamList,
@@ -36,6 +39,15 @@ type Props = {
 function ProfessionalProfile({ route, navigation }: Props) {
   const professional = route.params;
 
+  const parsedMemberSince = useMemo(
+    () =>
+      formatDistanceToNow(parseISO(professional.memberSince), {
+        locale: ptBR,
+      }),
+
+    [professional.memberSince],
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
@@ -52,22 +64,46 @@ function ProfessionalProfile({ route, navigation }: Props) {
         {/* <LabelWrapper> */}
         <LabelWrapper>
           <Feather
-            name="smartphone"
+            name="map"
             size={14}
             color="#8a8a8f"
             style={{ marginRight: 6 }}
           />
-          <Label>{professional.phoneNumber}</Label>
+          <Label>{professional.distance.toFixed(2)} Km</Label>
         </LabelWrapper>
+
         <LabelWrapper>
           <Feather
-            name="mail"
+            name="trending-up"
             size={14}
             color="#8a8a8f"
             style={{ marginRight: 6 }}
           />
-          <Label>{professional.email}</Label>
+          <Label>Parceiro desde {parsedMemberSince} atrás.</Label>
         </LabelWrapper>
+
+        {professional.phoneNumber && (
+          <LabelWrapper>
+            <Feather
+              name="smartphone"
+              size={14}
+              color="#8a8a8f"
+              style={{ marginRight: 6 }}
+            />
+            <Label>{professional.phoneNumber}</Label>
+          </LabelWrapper>
+        )}
+        {professional.email && (
+          <LabelWrapper>
+            <Feather
+              name="mail"
+              size={14}
+              color="#8a8a8f"
+              style={{ marginRight: 6 }}
+            />
+            <Label>{professional.email}</Label>
+          </LabelWrapper>
+        )}
 
         {/* </LabelWrapper> */}
         <DescriptionContainer>

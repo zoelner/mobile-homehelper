@@ -11,8 +11,8 @@ import { useDispatch } from 'react-redux';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
 
-import { PositionScreensNavigatorParamList } from '../PositionScreens';
-import { RootParamList } from '~/core/routes/app.routes';
+import { PositionScreensNavigatorParamList } from '../../../navigations/app.routes/positions.routes';
+import { RootParamList } from '~/navigations/app.routes';
 import api from '~/core/services/api';
 
 import styles from './styles';

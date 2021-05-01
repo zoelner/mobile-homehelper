@@ -4,11 +4,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { TouchableWithoutFeedback } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 import api from '~/core/services/api';
 import ProfileBlank from '~/assets/images/profile.png';
 
-import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
+import { ServiceScreensNavigatorParamList } from '../../../navigations/app.routes/services.routes';
 
 import {
   Container,

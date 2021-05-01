@@ -2,9 +2,9 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Service from './Service';
-import ProfesssionalsList from './ProfesssionalsList';
-import ProfessionalProfile from './ProfessionalProfile';
+import Service from '~/pages/ServiceScreens/Service';
+import ProfesssionalsList from '~/pages/ServiceScreens/ProfesssionalsList';
+import ProfessionalProfile from '~/pages/ServiceScreens/ProfessionalProfile';
 
 export type ServiceScreensNavigatorParamList = {
   Service: { id: number };

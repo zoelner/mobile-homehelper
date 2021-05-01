@@ -4,7 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 import api from '~/core/services/api';
 
 import { parseProfileAddress } from '~/core/utils/parsers';
