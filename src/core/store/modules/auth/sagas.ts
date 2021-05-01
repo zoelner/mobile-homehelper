@@ -41,6 +41,11 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
     const responseProfile: AxiosResponse<ProfileType> = yield call(
       api.get,
       '/profile',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
 
     const profile = responseProfile.data;

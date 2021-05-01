@@ -93,6 +93,7 @@ const SignIn: React.FC = () => {
                 placeholder="Senha"
                 textContentType="password"
                 autoCompleteType="password"
+                autoCapitalize="none"
                 secureTextEntry
                 returnKeyType="send"
                 onSubmitEditing={() => {

@@ -4,6 +4,7 @@
   "expo": {
     "name": "Mobile Homehelper",
     "slug": "mobile_homehelper",
-    "description": ""
+    "description": "",
+    "owner": "homehelper"
   }
 }
