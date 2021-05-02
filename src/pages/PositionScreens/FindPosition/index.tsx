@@ -36,11 +36,8 @@ const styles = StyleSheet.create({
 
   containerButton: {
     position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     bottom: '8%',
-    width: Dimensions.get('window').width,
+    width: '50%',
   },
 });
 
