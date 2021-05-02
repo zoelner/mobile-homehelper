@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { RootParamList } from '~/navigations/app.routes';
 import api from '~/core/services/api';
@@ -23,6 +23,7 @@ import {
 import CategoryItem from './CategoryItem';
 import ServiceItem from './ServiceItem';
 import { RootState } from '~/core/store/modules/rootReducer';
+import { updateProfile } from '~/core/store/modules/user/actions';
 
 type Props = BottomTabScreenProps<RootParamList, 'Main'>;
 
@@ -32,6 +33,7 @@ type DashboardState = {
 };
 
 function Dashboard({ navigation }: Props) {
+  const dispatch = useDispatch();
   const [state, setState] = useState<DashboardState>({} as DashboardState);
   const profile = useSelector((rootState: RootState) => rootState.user.profile);
 
@@ -53,6 +55,16 @@ function Dashboard({ navigation }: Props) {
     }
 
     loadDashboardScreen();
+  }, []);
+
+  useEffect(() => {
+    async function loadProfile() {
+      const response = await api.get<ProfileType>('profile');
+
+      dispatch(updateProfile({ profile: response.data }));
+    }
+
+    loadProfile();
   }, []);
 
   function navigateToCategory(id: number) {

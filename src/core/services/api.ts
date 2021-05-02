@@ -11,7 +11,7 @@ const api = axios.create({
   baseURL: BASE_URL,
 });
 
-async function getAccessToken() {
+export async function getAccessToken() {
   const token = await AsyncStorage.getItem(Configuration.AUTH.KEY_TOKEN);
   return token;
 }

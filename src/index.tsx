@@ -25,7 +25,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <StatusBar style="auto" translucent />
+        <StatusBar style="dark" translucent backgroundColor="#ffffff" />
         <NavigationContainer ref={navigationRef}>
           <Navigations />
         </NavigationContainer>
