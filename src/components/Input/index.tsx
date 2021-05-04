@@ -9,15 +9,12 @@ import React, {
 
 import { TextInputProps, TextInput as TextInputRN } from 'react-native';
 import { useField } from '@unform/core';
-import { Container, TextInput } from './styles';
+import { Container, ErrorLabel, WordCount, Footer } from './styles';
 
 interface InputProps extends TextInputProps {
   name: string;
+  wordCount?: boolean;
   containerStyle?: {};
-}
-
-interface InputValueReference {
-  value: string;
 }
 
 interface InputRef {
@@ -25,12 +22,14 @@ interface InputRef {
 }
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
-  { name, containerStyle = {}, ...rest },
+  { name, containerStyle = {}, wordCount = false, ...rest },
   ref,
 ) => {
   const inputElementRef = useRef<TextInputRN & { value: unknown }>(null);
 
   const { registerField, defaultValue, fieldName, error } = useField(name);
+
+  const [wordCounter, setWordCounter] = useState(0);
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -64,38 +63,53 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputProps> = (
         if (inputElementRef.current) {
           inputElementRef.current.setNativeProps({ text: value });
           inputElementRef.current.value = value;
+          if (wordCount) setWordCounter(String(value).length);
         }
       },
       clearValue() {
         if (inputElementRef.current) {
           inputElementRef.current.setNativeProps({ text: '' });
           inputElementRef.current.value = '';
+          if (wordCount) setWordCounter(0);
         }
       },
     });
   }, [fieldName, registerField]);
 
   const handleChangeText = (text: unknown) => {
-    if (inputElementRef.current) inputElementRef.current.value = text;
+    if (inputElementRef.current) {
+      inputElementRef.current.value = text;
+      if (wordCount) setWordCounter(String(text).length);
+    }
   };
 
   return (
-    <Container style={containerStyle} isFocused={isFocused} isErrored={!!error}>
-      <TextInputRN
-        ref={inputElementRef}
-        defaultValue={defaultValue}
-        onChangeText={handleChangeText}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        {...rest}
-        style={{
-          flex: 1,
-          fontSize: 14,
-          color: '#b2b2b2',
-        }}
-        placeholderTextColor="#8A8A8F"
-      />
-    </Container>
+    <>
+      <Container
+        style={containerStyle}
+        isFocused={isFocused}
+        isErrored={!!error}
+      >
+        <TextInputRN
+          ref={inputElementRef}
+          defaultValue={defaultValue}
+          onChangeText={handleChangeText}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          {...rest}
+          style={{
+            flex: 1,
+            fontSize: 14,
+            color: '#b2b2b2',
+          }}
+          placeholderTextColor="#8A8A8F"
+        />
+      </Container>
+      <Footer>
+        {error && <ErrorLabel>{error}</ErrorLabel>}
+        {wordCount && <WordCount>{wordCounter}</WordCount>}
+      </Footer>
+    </>
   );
 };
 

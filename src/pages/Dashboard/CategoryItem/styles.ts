@@ -3,7 +3,6 @@ import { Image as ImageNative } from 'react-native';
 
 export const Container = styled.View`
   margin: 16px 8px 0px 8px;
-
   align-items: center;
   box-shadow: 2px 4px 10px rgba(105, 62, 255, 0.1);
 `;

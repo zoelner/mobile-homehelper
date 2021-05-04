@@ -78,8 +78,7 @@ function Dashboard({ navigation }: Props) {
     navigation.navigate('ServiceScreens', {
       screen: 'ProfessionalsList',
       params: {
-        id: item.id,
-        serviceName: item.name,
+        service: item,
       },
     });
   }

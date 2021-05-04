@@ -53,7 +53,7 @@ function ProfesssionalsList({ route, navigation }: Props) {
       if (!latitude || !longitude) return;
 
       const params = new URLSearchParams();
-      params.append('serviceTypeID', String(route.params.id));
+      params.append('serviceTypeID', String(route.params.service.id));
       params.append('distance', '15');
       params.append('latitude', String(latitude));
       params.append('longitude', String(longitude));
@@ -67,7 +67,7 @@ function ProfesssionalsList({ route, navigation }: Props) {
     }
 
     loadProfessionals();
-  }, [route.params.id, latitude, longitude]);
+  }, [route.params.service.id, latitude, longitude]);
 
   return (
     <Container>
@@ -80,7 +80,10 @@ function ProfesssionalsList({ route, navigation }: Props) {
               onPress={() => {
                 navigation.navigate('ServiceScreens', {
                   screen: 'ProfessionalProfile',
-                  params: item,
+                  params: {
+                    service: route.params.service,
+                    profile: item,
+                  },
                 });
               }}
             >

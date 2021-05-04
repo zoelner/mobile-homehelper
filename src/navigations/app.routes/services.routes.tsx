@@ -3,13 +3,25 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Service from '~/pages/ServiceScreens/Service';
-import ProfesssionalsList from '~/pages/ServiceScreens/ProfesssionalsList';
+import ProfessionalsList from '~/pages/ServiceScreens/ProfesssionalsList';
 import ProfessionalProfile from '~/pages/ServiceScreens/ProfessionalProfile';
+import ServiceBudget from '~/pages/ServiceScreens/ServiceBudget';
+import ServiceBudgetImages from '~/pages/ServiceScreens/ServiceBudgetImages';
 
 export type ServiceScreensNavigatorParamList = {
   Service: { id: number };
-  ProfessionalsList: { id: number; serviceName: string };
-  ProfessionalProfile: ProfessionalProfileType;
+  ProfessionalsList: { service: ServiceType };
+  ProfessionalProfile: {
+    service: ServiceType;
+    profile: ProfessionalProfileType;
+  };
+  ServiceBudget: {
+    service: ServiceType;
+    profile: ProfessionalProfileType;
+  };
+  ServiceBudgetImages: {
+    requestId: number;
+  };
 };
 
 const Stack = createStackNavigator<ServiceScreensNavigatorParamList>();
@@ -27,11 +39,11 @@ function ServiceScreens() {
       />
       <Stack.Screen
         name="ProfessionalsList"
-        component={ProfesssionalsList}
+        component={ProfessionalsList}
         options={({ route }) => ({
           headerShown: true,
           title: 'Profissionais',
-          headerBackTitle: route.params.serviceName,
+          headerBackTitle: route.params.service.name,
         })}
       />
       <Stack.Screen
@@ -39,7 +51,24 @@ function ServiceScreens() {
         component={ProfessionalProfile}
         options={({ route }) => ({
           headerShown: true,
-          title: route.params.name,
+          title: route.params.profile.name,
+        })}
+      />
+      <Stack.Screen
+        name="ServiceBudget"
+        component={ServiceBudget}
+        options={({ route }) => ({
+          headerShown: true,
+          title: route.params.service.name,
+          headerBackTitle: route.params.profile.name,
+        })}
+      />
+      <Stack.Screen
+        name="ServiceBudgetImages"
+        component={ServiceBudgetImages}
+        options={({ route }) => ({
+          title: 'Selecionar Fotos',
+          headerShown: true,
         })}
       />
     </Stack.Navigator>

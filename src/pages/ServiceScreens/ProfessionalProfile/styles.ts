@@ -52,3 +52,7 @@ export const Description = styled.Text`
   color: #222222;
   letter-spacing: 0.2px;
 `;
+
+export const Budget = styled.View`
+  width: 50%;
+`;

@@ -31,14 +31,15 @@ export const HeaderText = styled.Text`
 export const CategoryList = styled(
   FlatList as new () => FlatList<CategoryType>,
 )`
-  flex-grow: 0;
+  height: 146px;
+  flex-grow: 1;
   margin-bottom: 16px;
 `;
 
 export const Title = styled.Text`
-  margin: 16px 8px;
+  margin: 8px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bold;
 `;
 
 export const ServiceList = styled(

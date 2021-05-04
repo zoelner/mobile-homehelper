@@ -3,6 +3,9 @@ import { SafeAreaView } from 'react-native';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Feather } from '@expo/vector-icons';
+import { formatDistanceToNow } from 'date-fns';
+import { parseISO } from 'date-fns/esm';
+import { ptBR } from 'date-fns/locale';
 
 import { RootParamList } from '~/navigations/app.routes';
 import ProfileBlank from '~/assets/images/profile.png';
@@ -18,10 +21,10 @@ import {
   Label,
   DescriptionContainer,
   Description,
+  Budget,
 } from './styles';
-import { formatDistanceToNow } from 'date-fns';
-import { parseISO } from 'date-fns/esm';
-import { ptBR } from 'date-fns/locale';
+
+import Button from '~/components/Button';
 
 type ProfileRouteProp = RouteProp<
   ServiceScreensNavigatorParamList,
@@ -37,16 +40,26 @@ type Props = {
 };
 
 function ProfessionalProfile({ route, navigation }: Props) {
-  const professional = route.params;
+  const { profile, service } = route.params;
 
   const parsedMemberSince = useMemo(
     () =>
-      formatDistanceToNow(parseISO(professional.memberSince), {
+      formatDistanceToNow(parseISO(profile.memberSince), {
         locale: ptBR,
       }),
 
-    [professional.memberSince],
+    [profile.memberSince],
   );
+
+  function navigateToServiceBudget() {
+    navigation.navigate('ServiceScreens', {
+      screen: 'ServiceBudget',
+      params: {
+        profile,
+        service,
+      },
+    });
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -54,13 +67,11 @@ function ProfessionalProfile({ route, navigation }: Props) {
         <ProfileImageContainer>
           <ProfileImage
             source={
-              professional.image?.url
-                ? { uri: professional.image.url }
-                : ProfileBlank
+              profile.image?.url ? { uri: profile.image.url } : ProfileBlank
             }
           />
         </ProfileImageContainer>
-        <Title>{professional.name}</Title>
+        <Title>{profile.name}</Title>
         {/* <LabelWrapper> */}
         <LabelWrapper>
           <Feather
@@ -69,7 +80,7 @@ function ProfessionalProfile({ route, navigation }: Props) {
             color="#8a8a8f"
             style={{ marginRight: 6 }}
           />
-          <Label>{professional.distance.toFixed(2)} Km</Label>
+          <Label>{profile.distance.toFixed(2)} Km</Label>
         </LabelWrapper>
 
         <LabelWrapper>
@@ -82,7 +93,7 @@ function ProfessionalProfile({ route, navigation }: Props) {
           <Label>Parceiro desde {parsedMemberSince} atrás.</Label>
         </LabelWrapper>
 
-        {professional.phoneNumber && (
+        {profile.phoneNumber && (
           <LabelWrapper>
             <Feather
               name="smartphone"
@@ -90,10 +101,10 @@ function ProfessionalProfile({ route, navigation }: Props) {
               color="#8a8a8f"
               style={{ marginRight: 6 }}
             />
-            <Label>{professional.phoneNumber}</Label>
+            <Label>{profile.phoneNumber}</Label>
           </LabelWrapper>
         )}
-        {professional.email && (
+        {profile.email && (
           <LabelWrapper>
             <Feather
               name="mail"
@@ -101,14 +112,18 @@ function ProfessionalProfile({ route, navigation }: Props) {
               color="#8a8a8f"
               style={{ marginRight: 6 }}
             />
-            <Label>{professional.email}</Label>
+            <Label>{profile.email}</Label>
           </LabelWrapper>
         )}
 
         {/* </LabelWrapper> */}
         <DescriptionContainer>
-          <Description>{professional.description}</Description>
+          <Description>{profile.description}</Description>
         </DescriptionContainer>
+
+        <Budget>
+          <Button onPress={navigateToServiceBudget}>Solitar orçamento</Button>
+        </Budget>
       </Container>
     </SafeAreaView>
   );

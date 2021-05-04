@@ -8,7 +8,7 @@ import { Platform } from 'react-native';
 import api from '~/core/services/api';
 import { useDispatch } from 'react-redux';
 import { updateProfile } from '~/core/store/modules/user/actions';
-import createFormData from '~/core/utils/createFormData';
+import createImageFormData from '~/core/utils/createFormData';
 
 interface ProfileImageProps {
   source?: string;
@@ -41,7 +41,7 @@ function ProfileImage({ source }: ProfileImageProps) {
     });
 
     if (!result.cancelled) {
-      const formData = createFormData(result.uri);
+      const formData = createImageFormData(result.uri);
 
       const response = await api.post('/profile/upload', formData);
 
