@@ -5,9 +5,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { differenceInDays, parseISO } from 'date-fns';
 
 import api from '~/core/services/api';
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 
-import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
+import { ServiceScreensNavigatorParamList } from '../../../navigations/app.routes/services.routes';
 
 import {
   Container,
@@ -65,8 +65,7 @@ function Service({ route, navigation }: Props) {
     navigation.navigate('ServiceScreens', {
       screen: 'ProfessionalsList',
       params: {
-        id: item.id,
-        serviceName: item.name,
+        service: item,
       },
     });
   }

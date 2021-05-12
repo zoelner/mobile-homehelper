@@ -8,9 +8,9 @@ import * as Location from 'expo-location';
 import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 
 import Button from '~/components/Button';
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 
-import { PositionScreensNavigatorParamList } from '../PositionScreens';
+import { PositionScreensNavigatorParamList } from '~/navigations/app.routes/positions.routes';
 import { LocationGeocodedAddress, LocationObject } from 'expo-location';
 import { parseCurrentAddress } from '~/core/utils/parsers';
 
@@ -36,11 +36,8 @@ const styles = StyleSheet.create({
 
   containerButton: {
     position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
     bottom: '8%',
-    width: Dimensions.get('window').width,
+    width: '50%',
   },
 });
 

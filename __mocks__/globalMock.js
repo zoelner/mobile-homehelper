@@ -1,6 +1,4 @@
 jest.mock('global', () => ({
   ...global,
-  WebSocket: function WebSocket() {
-    return undefined;
-  },
+  WebSocket: function WebSocket() {},
 }));

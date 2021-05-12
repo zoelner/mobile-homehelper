@@ -4,11 +4,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { TouchableWithoutFeedback } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { RootParamList } from '~/core/routes/app.routes';
+import { RootParamList } from '~/navigations/app.routes';
 import api from '~/core/services/api';
 import ProfileBlank from '~/assets/images/profile.png';
 
-import { ServiceScreensNavigatorParamList } from '../ServiceScreens';
+import { ServiceScreensNavigatorParamList } from '../../../navigations/app.routes/services.routes';
 
 import {
   Container,
@@ -53,7 +53,7 @@ function ProfesssionalsList({ route, navigation }: Props) {
       if (!latitude || !longitude) return;
 
       const params = new URLSearchParams();
-      params.append('serviceTypeID', String(route.params.id));
+      params.append('serviceTypeID', String(route.params.service.id));
       params.append('distance', '15');
       params.append('latitude', String(latitude));
       params.append('longitude', String(longitude));
@@ -67,7 +67,7 @@ function ProfesssionalsList({ route, navigation }: Props) {
     }
 
     loadProfessionals();
-  }, [route.params.id, latitude, longitude]);
+  }, [route.params.service.id, latitude, longitude]);
 
   return (
     <Container>
@@ -80,7 +80,10 @@ function ProfesssionalsList({ route, navigation }: Props) {
               onPress={() => {
                 navigation.navigate('ServiceScreens', {
                   screen: 'ProfessionalProfile',
-                  params: item,
+                  params: {
+                    service: route.params.service,
+                    profile: item,
+                  },
                 });
               }}
             >

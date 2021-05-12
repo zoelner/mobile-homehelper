@@ -7,7 +7,7 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   border-radius: 4px;
   padding: 12px 16px;
   font-size: 14px;
@@ -28,4 +28,16 @@ export const Container = styled.View<ContainerProps>`
     `};
 `;
 
-export const TextInput = styled.TextInput``;
+export const Footer = styled.View`
+  margin-top: 4px;
+  flex-direction: row;
+`;
+
+export const ErrorLabel = styled.Text`
+  color: #fa7d7d;
+`;
+
+export const WordCount = styled.Text`
+  color: #8a8a8f;
+  margin-left: auto;
+`;

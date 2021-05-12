@@ -18,16 +18,16 @@ import { Provider } from 'react-redux';
 import '~/core/config/Reactotron.config';
 
 import { store, persistor } from '~/core/store';
-import Routes from '~/core/routes';
+import Navigations from '~/navigations';
 import { navigationRef } from '~/core/services/RootNavigation';
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <StatusBar style="auto" translucent />
+        <StatusBar style="dark" translucent backgroundColor="#ffffff" />
         <NavigationContainer ref={navigationRef}>
-          <Routes />
+          <Navigations />
         </NavigationContainer>
       </PersistGate>
     </Provider>

@@ -25,7 +25,8 @@ export const FakeUserInput = styled.View`
   align-items: center;
   padding: 16px 24px;
 
-  background-color: #f7f7f7;
+  background-color: #ffffff;
+  border-radius: 4px;
   border: 1px solid #f2f2f2;
   margin: 8px;
 `;
@@ -34,4 +35,5 @@ export const FakeUserInputText = styled.Text`
   font-size: 14px;
   color: #8a8a8f;
   margin-left: 16px;
+  font-weight: bold;
 `;

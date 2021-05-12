@@ -5,20 +5,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Configuration from '~/core/config/configuration';
 import Reactotron from '~/core/config/Reactotron.config';
 
-const BASE_URL = 'https://api-homehelper.herokuapp.com/api';
+export const BASE_URL = 'https://api-homehelper.herokuapp.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
 });
 
-async function getAccessToken() {
+export async function getAccessToken() {
   const token = await AsyncStorage.getItem(Configuration.AUTH.KEY_TOKEN);
   return token;
 }
 
-let accessToken: string | Promise<string | null> = getAccessToken();
-
-accessToken.then((token) => {
+getAccessToken().then((token) => {
   Reactotron.log?.(`acessToken: ${token}`);
 });
 
@@ -32,8 +30,6 @@ const refreshAuthLogic = async (request: AxiosError) => {
     { refreshToken },
   );
 
-  accessToken = response.data.token;
-
   AsyncStorage.setItem(Configuration.AUTH.KEY_TOKEN, response.data.token);
 
   if (request.response) {
@@ -42,7 +38,7 @@ const refreshAuthLogic = async (request: AxiosError) => {
 };
 
 api.interceptors.request.use(async (request) => {
-  request.headers.Authorization = `Bearer ${await accessToken}`;
+  request.headers.Authorization = `Bearer ${await getAccessToken()}`;
   return request;
 });
 

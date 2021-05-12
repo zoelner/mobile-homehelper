@@ -5,6 +5,7 @@
     "name": "Mobile Homehelper",
     "slug": "mobile_homehelper",
     "description": "",
-    "owner": "homehelper"
+    "owner": "homehelper",
+    "orientation": "portrait"
   }
 }
