@@ -2,7 +2,9 @@ import styled from 'styled-components/native';
 import { Dimensions, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Container = styled(SafeAreaView)`
+export const Container = styled(SafeAreaView).attrs({
+  edges: ['top', 'right', 'left'],
+})`
   flex: 1;
   background-color: #fff;
   width: ${Dimensions.get('screen').width}px;
