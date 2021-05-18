@@ -18,7 +18,7 @@ export const Header = styled.View`
 
 export const Title = styled.Text`
   color: #363f5f;
-  font-size: 14px;
+  font-size: 18px;
 `;
 
 type StatusProps = {

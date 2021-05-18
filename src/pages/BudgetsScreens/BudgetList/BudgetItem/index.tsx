@@ -34,7 +34,7 @@ function BudgetItem({
   return (
     <Container>
       <Header>
-        <Title>{serviceType.name}</Title>
+        <Title ellipsizeMode="tail">{serviceType.name}</Title>
         <Status variant={status}>{parserStatus(status)}</Status>
       </Header>
       <Description numberOfLines={3} ellipsizeMode="tail">
