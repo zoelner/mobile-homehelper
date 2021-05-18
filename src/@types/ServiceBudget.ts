@@ -3,6 +3,7 @@ export enum ServiceBudgetStatus {
   WAITING_FOR_APROVAL = 'WAITING_FOR_APROVAL',
   APPROVED = 'APPROVED',
   REJECTED = 'REJECTED',
+  REJECTED_BY_PROFESSIONAL = 'REJECTED_BY_PROFESSIONAL',
 }
 
 export interface ServiceBudgetType {

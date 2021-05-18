@@ -1,4 +1,5 @@
 import { LocationGeocodedAddress } from 'expo-location';
+import { ServiceBudgetStatus } from '~/@types/ServiceBudget';
 
 export function parseNumber(number: string | null) {
   if (!number) return;
@@ -40,4 +41,29 @@ export function parseProfileAddress(
     return `${data.streetName},  ${data.number}`;
 
   return 'Desconhecido';
+}
+
+export function parserStatus(status: ServiceBudgetStatus) {
+  const options: Record<ServiceBudgetStatus, string> = {
+    [ServiceBudgetStatus.APPROVED]: 'Aprovado',
+    [ServiceBudgetStatus.REJECTED]: 'Rejeitado',
+    [ServiceBudgetStatus.REJECTED_BY_PROFESSIONAL]:
+      'Rejeitado pelo Profissional',
+    [ServiceBudgetStatus.WAITING_FOR_APROVAL]: 'Aguardando Aprovação',
+    [ServiceBudgetStatus.WAITING_FOR_BUDGET]: 'Aguardando Orçamento',
+  };
+
+  return options[status];
+}
+
+export function parserStatusColor(status: ServiceBudgetStatus) {
+  const options: Record<ServiceBudgetStatus, string> = {
+    [ServiceBudgetStatus.APPROVED]: '#12A454',
+    [ServiceBudgetStatus.REJECTED]: '#E83F5B',
+    [ServiceBudgetStatus.REJECTED_BY_PROFESSIONAL]: '#E83F5B',
+    [ServiceBudgetStatus.WAITING_FOR_APROVAL]: '#516ED4',
+    [ServiceBudgetStatus.WAITING_FOR_BUDGET]: '#516ED4',
+  };
+
+  return options[status];
 }

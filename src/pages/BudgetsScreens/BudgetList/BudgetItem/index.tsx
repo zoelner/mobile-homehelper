@@ -5,7 +5,9 @@ import { ServiceBudgetType } from '~/@types/ServiceBudget';
 
 import {
   Container,
+  Header,
   Title,
+  Status,
   Description,
   Footer,
   FooterWrapper,
@@ -14,12 +16,14 @@ import {
 } from './styles';
 import { parseISO } from 'date-fns/esm';
 import { format } from 'date-fns';
+import { parserStatus } from '~/core/utils/parsers';
 
 type BudgetItemProps = ServiceBudgetType;
 
 function BudgetItem({
   serviceType,
   professional,
+  status,
   description,
   createdAt,
 }: BudgetItemProps) {
@@ -29,7 +33,10 @@ function BudgetItem({
 
   return (
     <Container>
-      <Title>{serviceType.name}</Title>
+      <Header>
+        <Title>{serviceType.name}</Title>
+        <Status variant={status}>{parserStatus(status)}</Status>
+      </Header>
       <Description numberOfLines={3} ellipsizeMode="tail">
         {description}
       </Description>

@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import { ServiceBudgetStatus } from '~/@types/ServiceBudget';
+import { parserStatusColor } from '~/core/utils/parsers';
 
 export const Container = styled.TouchableOpacity`
   height: 144px;
@@ -8,9 +10,24 @@ export const Container = styled.TouchableOpacity`
   margin-bottom: 16px;
 `;
 
+export const Header = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const Title = styled.Text`
   color: #363f5f;
   font-size: 14px;
+`;
+
+type StatusProps = {
+  variant: ServiceBudgetStatus;
+};
+
+export const Status = styled.Text<StatusProps>`
+  color: ${({ variant }) => parserStatusColor(variant) || '#51A2A7'};
+  font-weight: bold;
 `;
 
 export const Description = styled.Text`
