@@ -1,16 +1,42 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
 
-export const Container = styled(TouchableOpacity)`
+export type Variant = 'contained' | 'text';
+
+const ButtonVariants = {
+  contained: css`
+    background-color: #41cebb;
+  `,
+  text: css`
+    background-color: transparent;
+  `,
+};
+
+const TextVariants = {
+  contained: css`
+    color: #ffffff;
+  `,
+  text: css`
+    color: #212121;
+  `,
+};
+
+interface Props {
+  variant: Variant;
+}
+
+export const Container = styled(TouchableOpacity)<Props>`
   height: 40px;
   border-radius: 4px;
-  background-color: #41cebb;
   align-items: center;
   justify-content: center;
+
+  ${({ variant }) => ButtonVariants[variant]}
 `;
 
-export const Text = styled.Text`
+export const Text = styled.Text<Props>`
   font-size: 14px;
-  color: #ffffff;
   font-weight: bold;
+
+  ${({ variant }) => TextVariants[variant]}
 `;

@@ -86,13 +86,7 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
   }
 }
 
-/* istanbul ignore next */
-export function* signOut() {
-  yield null;
-}
-
 export default all([
   takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
   takeLatest(AuthTypes.SIGN_UP_REQUEST, signUp),
-  takeLatest(AuthTypes.SIGN_OUT, signOut),
 ]);
