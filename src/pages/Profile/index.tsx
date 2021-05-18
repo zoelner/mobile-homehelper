@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import api from '~/core/services/api';
+import { signOut } from '~/core/store/modules/auth/actions';
 
 import { RootState } from '~/core/store/modules/rootReducer';
 import { updateProfile } from '~/core/store/modules/user/actions';
@@ -101,6 +102,17 @@ function Profile() {
                 }}
               >
                 Salvar
+              </Button>
+            </FormField>
+
+            <FormField>
+              <Button
+                variant="text"
+                onPress={() => {
+                  dispatch(signOut());
+                }}
+              >
+                Sair
               </Button>
             </FormField>
           </Form>

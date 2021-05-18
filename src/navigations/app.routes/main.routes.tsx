@@ -4,9 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Dashboard from '~/pages/Dashboard';
 import Profile from '~/pages/Profile';
+import BudgetsScreens from './bugets.routes';
 
 export type MainParamList = {
   Home: undefined;
+  Budget: undefined;
   Profile: undefined;
 };
 
@@ -28,6 +30,16 @@ function MainTabs() {
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Feather name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <MainNavigator.Screen
+        name="Budget"
+        component={BudgetsScreens}
+        options={{
+          tabBarLabel: 'Orçamentos',
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="tool" color={color} size={size} />
           ),
         }}
       />

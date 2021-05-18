@@ -40,6 +40,7 @@ type ServiceBudgetImagesProp = {
 
 function ServiceBudgetImages({ navigation, route }: ServiceBudgetImagesProp) {
   const [images, setImage] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function requestPermission() {
@@ -53,6 +54,7 @@ function ServiceBudgetImages({ navigation, route }: ServiceBudgetImagesProp) {
         Alert.alert(
           'Precisamos da permissão da câmera e biblioteca para fazer isso funcionar!',
         );
+        navigation.goBack();
       }
     }
 
@@ -92,8 +94,9 @@ function ServiceBudgetImages({ navigation, route }: ServiceBudgetImagesProp) {
   async function handleSubmit() {
     const data = createImageFormData(images);
     const { requestId } = route.params;
-
+    setLoading(true);
     await api.post(`/request/service/${requestId}/upload`, data);
+    setLoading(false);
 
     navigation.replace('Main', {
       screen: 'Home',
@@ -168,7 +171,9 @@ function ServiceBudgetImages({ navigation, route }: ServiceBudgetImagesProp) {
           width: '70%',
         }}
       >
-        <Button onPress={handleSubmit}>Solicitar orçamento</Button>
+        <Button onPress={handleSubmit} loading={loading}>
+          Solicitar orçamento
+        </Button>
       </View>
     </Container>
   );

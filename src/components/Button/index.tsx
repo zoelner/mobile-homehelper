@@ -1,15 +1,29 @@
 import React from 'react';
 
-import { TouchableOpacityProps } from 'react-native';
-import { Container, Text } from './styles';
+import { ActivityIndicator, TouchableOpacityProps } from 'react-native';
+import { Container, Text, Variant } from './styles';
 
 interface ButtonProps extends TouchableOpacityProps {
   children: string;
+  variant?: Variant;
+  loading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
-  <Container {...rest}>
-    <Text>{children}</Text>
+const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'contained',
+  loading = false,
+  ...rest
+}) => (
+  <Container {...rest} variant={variant}>
+    {loading ? (
+      <ActivityIndicator
+        size="small"
+        color={variant === 'contained' ? '#fff' : '#212121'}
+      />
+    ) : (
+      <Text variant={variant}>{children}</Text>
+    )}
   </Container>
 );
 
