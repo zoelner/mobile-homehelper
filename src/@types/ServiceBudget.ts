@@ -8,11 +8,17 @@ export enum ServiceBudgetStatus {
 
 export interface ServiceBudgetType {
   id: number;
-  professional: Pick<ProfileType, 'id' | 'name' | 'image'>;
+  professional: Pick<
+    ProfileType,
+    'id' | 'name' | 'image' | 'email' | 'phoneNumber'
+  >;
   description: string;
   createdAt: string;
   updatedAt: string;
   address: AddressType;
   status: ServiceBudgetStatus;
   serviceType: ServiceType;
+  images?: ImageContent[];
+  professionalDescription?: string;
+  price?: number;
 }

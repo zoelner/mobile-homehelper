@@ -2,10 +2,14 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import BudgetList from '~/pages/BudgetsScreens/BudgetList';
+import BudgetDescription from '~/pages/BudgetsScreens/BudgetDescription';
 
 export type BudgetsScreensNavigatorParamList = {
   BudgetList: undefined;
-  BudgetDescription: undefined;
+  BudgetDescription: {
+    id: number;
+    name: string;
+  };
 };
 
 const Budgets = createStackNavigator<BudgetsScreensNavigatorParamList>();
@@ -19,6 +23,13 @@ function BudgetsScreens() {
         options={{
           headerShown: false,
         }}
+      />
+      <Budgets.Screen
+        name="BudgetDescription"
+        component={BudgetDescription}
+        options={({ route }) => ({
+          title: route.params.name,
+        })}
       />
     </Budgets.Navigator>
   );
