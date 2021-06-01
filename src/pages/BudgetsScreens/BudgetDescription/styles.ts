@@ -5,7 +5,7 @@ export const Container = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
   background-color: #ffffff;
-  margin: 16px;
+  margin: 16px 16px 0 16px;
 `;
 
 export const ImageBudget = styled.Image`
@@ -36,6 +36,7 @@ export const FooterBudgetDescription = styled.View`
   top: 0;
   right: 0;
   flex-direction: row;
+  z-index: 1;
 `;
 
 export const Button = styled.TouchableOpacity`

@@ -76,12 +76,14 @@ function BudgetDescription({ route, navigation }: BudgetDescription) {
       await api.post(`/service/${route.params.id}/approve`);
     } catch (error) {
       Alert.alert('Ooops', 'Não conseguimos processar a sua solicitação');
+    } finally {
+      loadBudgetDescription();
     }
   }
 
   return (
     <SafeAreaView
-      edges={['right', 'left', 'bottom']}
+      edges={['right', 'left']}
       style={{
         flex: 1,
         backgroundColor: '#ffffff',

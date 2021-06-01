@@ -28,6 +28,7 @@ function BudgetsScreens() {
         name="BudgetDescription"
         component={BudgetDescription}
         options={({ route }) => ({
+          headerBackTitle: 'Orçamentos',
           title: route.params.name,
         })}
       />
