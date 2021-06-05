@@ -1,11 +1,15 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   TextInput,
+  Switch,
+  View,
+  Text,
 } from 'react-native';
 import * as Yup from 'yup';
+import { useNavigation } from '@react-navigation/native';
 
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
@@ -29,7 +33,7 @@ interface SignUpFormData {
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome é obrigatório'),
   username: Yup.string().required('Usuário obrigatório'),
-  email: Yup.string().email().required('Usuário obrigatório'),
+  email: Yup.string().email().required('Email obrigatório'),
   password: Yup.string().min(6).required('Digite uma senha válida'),
 });
 
@@ -38,6 +42,11 @@ const SignUp: React.FC = () => {
   const usernameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
+  const navigation = useNavigation();
   const dispatch = useDispatch();
 
   const handleSignUp = useCallback(
@@ -133,7 +142,34 @@ const SignUp: React.FC = () => {
                 }}
               />
 
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '100%',
+                }}
+              >
+                <Switch
+                  trackColor={{ false: '#767577', true: '#81b0ff' }}
+                  thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  style={{ marginRight: 8, marginTop: 8, marginBottom: 8 }}
+                  onValueChange={toggleSwitch}
+                  value={isEnabled}
+                />
+                <Text>
+                  Eu aceito os{' '}
+                  <Text
+                    style={{ color: '#007bff' }}
+                    onPress={() => navigation.navigate('TermsOfUse')}
+                  >
+                    Termos de uso.
+                  </Text>
+                </Text>
+              </View>
+
               <Button
+                disabled={!isEnabled}
                 onPress={() => {
                   formRef.current?.submitForm();
                 }}

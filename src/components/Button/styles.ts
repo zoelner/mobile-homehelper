@@ -32,6 +32,11 @@ export const Container = styled(TouchableOpacity)<Props>`
   justify-content: center;
 
   ${({ variant }) => ButtonVariants[variant]}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.4;
+    `}
 `;
 
 export const Text = styled.Text<Props>`

@@ -13,9 +13,10 @@ const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'contained',
   loading = false,
+  disabled = false,
   ...rest
 }) => (
-  <Container {...rest} variant={variant}>
+  <Container {...rest} variant={variant} disabled={disabled}>
     {loading ? (
       <ActivityIndicator
         size="small"
