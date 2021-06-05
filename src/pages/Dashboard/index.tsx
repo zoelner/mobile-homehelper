@@ -54,7 +54,9 @@ function Dashboard({ navigation }: Props) {
       }
     }
 
-    loadDashboardScreen();
+    const unsubscribe = navigation.addListener('focus', loadDashboardScreen);
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
@@ -64,7 +66,9 @@ function Dashboard({ navigation }: Props) {
       dispatch(updateProfile({ profile: response.data }));
     }
 
-    loadProfile();
+    const unsubscribe = navigation.addListener('focus', loadProfile);
+
+    return unsubscribe;
   }, []);
 
   function navigateToCategory(id: number) {

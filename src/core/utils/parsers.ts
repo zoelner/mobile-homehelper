@@ -55,15 +55,3 @@ export function parserStatus(status: ServiceBudgetStatus) {
 
   return options[status];
 }
-
-export function parserStatusColor(status: ServiceBudgetStatus) {
-  const options: Record<ServiceBudgetStatus, string> = {
-    [ServiceBudgetStatus.APPROVED]: '#12A454',
-    [ServiceBudgetStatus.REJECTED]: '#E83F5B',
-    [ServiceBudgetStatus.REJECTED_BY_PROFESSIONAL]: '#E83F5B',
-    [ServiceBudgetStatus.WAITING_FOR_APROVAL]: '#516ED4',
-    [ServiceBudgetStatus.WAITING_FOR_BUDGET]: '#516ED4',
-  };
-
-  return options[status];
-}

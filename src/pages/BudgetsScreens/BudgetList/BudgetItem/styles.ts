@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import { ServiceBudgetStatus } from '~/@types/ServiceBudget';
-import { parserStatusColor } from '~/core/utils/parsers';
 
 export const Container = styled.TouchableOpacity`
   height: 144px;
@@ -25,8 +24,16 @@ type StatusProps = {
   variant: ServiceBudgetStatus;
 };
 
+const variants: Record<ServiceBudgetStatus, string> = {
+  [ServiceBudgetStatus.APPROVED]: '#12A454',
+  [ServiceBudgetStatus.REJECTED]: '#E83F5B',
+  [ServiceBudgetStatus.REJECTED_BY_PROFESSIONAL]: '#E83F5B',
+  [ServiceBudgetStatus.WAITING_FOR_APROVAL]: '#516ED4',
+  [ServiceBudgetStatus.WAITING_FOR_BUDGET]: '#516ED4',
+};
+
 export const Status = styled.Text<StatusProps>`
-  color: ${({ variant }) => parserStatusColor(variant) || '#51A2A7'};
+  color: ${({ variant }) => variants[variant] || '#51A2A7'};
   font-weight: bold;
 `;
 

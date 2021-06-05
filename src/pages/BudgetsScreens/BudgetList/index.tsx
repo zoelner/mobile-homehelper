@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
 
@@ -10,13 +11,18 @@ import { Container, Header, HeaderText } from './styles';
 function BudgetList() {
   const [budgets, setBudgets] = useState([] as ServiceBudgetType[]);
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     async function loadBudgets() {
       const response = await api.get<ServiceBudgetType[]>('service');
 
       setBudgets(response.data);
     }
-    loadBudgets();
+
+    const unsubscribe = navigation.addListener('focus', loadBudgets);
+
+    return unsubscribe;
   }, []);
 
   return (
