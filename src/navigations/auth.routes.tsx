@@ -14,7 +14,7 @@ function AuthRoutes() {
         name="SignIn"
         component={SignIn}
         options={{
-          title: 'SignIn',
+          title: 'Bem Vindo',
           headerRight: ({ tintColor }) => (
             <HeaderRight
               text="Cadastrar"
@@ -28,7 +28,7 @@ function AuthRoutes() {
         name="SignUp"
         component={SignUp}
         options={{
-          title: 'SignUp',
+          title: 'Cadastro',
         }}
       />
     </RootNavigator.Navigator>

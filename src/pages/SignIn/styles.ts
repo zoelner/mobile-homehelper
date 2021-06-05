@@ -9,9 +9,10 @@ export const Container = styled.View`
   margin: auto;
 `;
 
-export const Title = styled.Text`
-  font-size: 28px;
-  font-weight: bold;
+export const Image = styled.Image`
+  width: 100%;
+  resize-mode: contain;
+  margin-bottom: 16px;
 `;
 
 export const SubTitle = styled.Text`

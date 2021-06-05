@@ -10,13 +10,15 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import { useDispatch } from 'react-redux';
 
+import Logo from '~/assets/images/Logo.png';
+
 import getValidationError from '~/core/utils/getValidationError';
 import { signInRequest } from '~/core/store/modules/auth/actions';
 
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 
-import { Container, Title, SubTitle, InputContainer } from './styles';
+import { Container, Image, SubTitle, InputContainer } from './styles';
 
 interface SignInFormData {
   username: string;
@@ -67,7 +69,7 @@ const SignIn: React.FC = () => {
         keyboardShouldPersistTaps="handled"
       >
         <Container>
-          <Title>Bem Vindo</Title>
+          <Image source={Logo} />
           <SubTitle>
             Estamos felizes em te encontrar! Gostariamos de ajudar a resolver o
             seu problema.
