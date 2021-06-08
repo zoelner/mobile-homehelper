@@ -87,6 +87,19 @@ function Dashboard({ navigation }: Props) {
     });
   }
 
+  useEffect(() => {
+    if (profile.id && !profile.address) {
+      navigation.navigate('PositionScreens', {
+        screen: 'SelectPosition',
+      });
+
+      Alert.alert(
+        'Seja bem vindo',
+        'Para dar continuidade, precisamos que você insira seu endereço.',
+      );
+    }
+  });
+
   return (
     <Container>
       <Header>

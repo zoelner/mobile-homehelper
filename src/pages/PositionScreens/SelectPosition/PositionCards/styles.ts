@@ -17,6 +17,12 @@ export const CurrentLocalization = styled.TouchableOpacity<CurrentLocalization>`
     css`
       border: 0.5px solid #41cebb;
     `}
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.5;
+    `}
 `;
 
 export const CurrentLocalizationIcon = styled.View`
