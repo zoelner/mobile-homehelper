@@ -89,7 +89,7 @@ function Profile() {
             </FormField>
             <FormField>
               <FormFieldLabel>CPF:</FormFieldLabel>
-              <Input name="cpf" editable={false} />
+              <Input name="cpf" editable={!data.cpf} />
             </FormField>
             <FormField>
               <FormFieldLabel>Telefone:</FormFieldLabel>
