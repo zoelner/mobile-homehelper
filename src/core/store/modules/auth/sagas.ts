@@ -17,6 +17,7 @@ import {
 } from './actions';
 
 import { Roles } from '../user/types';
+import Reactotron from '~/core/config/Reactotron.config';
 
 export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
   try {
@@ -32,6 +33,16 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
     });
 
     const { refreshToken, token, roles } = response.data;
+
+    Reactotron.log?.(roles);
+    if (roles.includes(Roles.ROLE_PROFESSIONAL)) {
+      Alert.alert(
+        'Essa plataforma é exclusiva para clientes.',
+        'Você profissional deve utilizar a plataforma web.',
+      );
+
+      return;
+    }
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
