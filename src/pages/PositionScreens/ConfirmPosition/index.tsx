@@ -98,7 +98,9 @@ function ConfirmPosition({ navigation, route }: Props) {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>{description.street}</Text>
           <Text style={styles.headerSubtitle}>
-            {`${description.subregion}, ${description.district}`}
+            {`${description.subregion ? description.subregion : ''}, ${
+              description.district ? description.district : ''
+            }`}
           </Text>
         </View>
         <View>
