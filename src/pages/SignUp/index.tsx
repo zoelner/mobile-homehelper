@@ -135,6 +135,7 @@ const SignUp: React.FC = () => {
                 placeholder="Senha"
                 textContentType="newPassword"
                 autoCompleteType="password"
+                autoCapitalize="none"
                 secureTextEntry
                 returnKeyType="send"
                 onSubmitEditing={() => {
