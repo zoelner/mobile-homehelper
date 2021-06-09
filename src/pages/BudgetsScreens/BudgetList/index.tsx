@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 
 import { ServiceBudgetType } from '~/@types/ServiceBudget';
 import api from '~/core/services/api';
 import BudgetItem from './BudgetItem';
+import BudgetItemEmpty from './BudgetItemEmpty';
 
 import { Container, Header, HeaderText } from './styles';
 
@@ -37,6 +38,7 @@ function BudgetList() {
         keyExtractor={(budget) => String(budget.id)}
         renderItem={({ item: budget }) => <BudgetItem {...budget} />}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={BudgetItemEmpty}
       />
     </Container>
   );

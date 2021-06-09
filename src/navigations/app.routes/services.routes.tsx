@@ -43,7 +43,7 @@ function ServiceScreens() {
         options={({ route }) => ({
           headerShown: true,
           title: 'Profissionais',
-          headerBackTitle: route.params.service.name,
+          headerBackTitle: 'Voltar',
         })}
       />
       <Stack.Screen

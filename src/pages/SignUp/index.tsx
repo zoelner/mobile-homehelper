@@ -97,6 +97,7 @@ const SignUp: React.FC = () => {
                 autoCapitalize="none"
                 autoCompleteType="name"
                 textContentType="name"
+                maxLength={100}
                 returnKeyType="next"
                 onSubmitEditing={() => {
                   usernameInputRef.current?.focus();
@@ -110,6 +111,7 @@ const SignUp: React.FC = () => {
                 autoCapitalize="none"
                 autoCompleteType="username"
                 textContentType="username"
+                maxLength={30}
                 returnKeyType="next"
                 onSubmitEditing={() => {
                   emailInputRef.current?.focus();
@@ -123,6 +125,7 @@ const SignUp: React.FC = () => {
                 autoCapitalize="none"
                 autoCompleteType="email"
                 textContentType="emailAddress"
+                maxLength={40}
                 returnKeyType="next"
                 onSubmitEditing={() => {
                   passwordInputRef.current?.focus();
@@ -134,10 +137,10 @@ const SignUp: React.FC = () => {
                 name="password"
                 placeholder="Senha"
                 textContentType="newPassword"
-                autoCompleteType="password"
                 autoCapitalize="none"
                 secureTextEntry
                 returnKeyType="send"
+                maxLength={32}
                 onSubmitEditing={() => {
                   formRef.current?.submitForm();
                 }}
@@ -151,8 +154,8 @@ const SignUp: React.FC = () => {
                 }}
               >
                 <Switch
-                  trackColor={{ false: '#767577', true: '#81b0ff' }}
-                  thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                  trackColor={{ false: '#767577', true: '#f4f3f4' }}
+                  thumbColor={isEnabled ? '#41cebb' : '#f4f3f4'}
                   ios_backgroundColor="#3e3e3e"
                   style={{ marginRight: 8, marginTop: 8, marginBottom: 8 }}
                   onValueChange={toggleSwitch}

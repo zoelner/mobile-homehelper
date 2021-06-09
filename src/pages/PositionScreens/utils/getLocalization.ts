@@ -1,10 +1,7 @@
 import * as Location from 'expo-location';
 
 export async function getLocalization() {
-  const {
-    status,
-    ...rest
-  } = await Location.requestForegroundPermissionsAsync();
+  const { status } = await Location.requestForegroundPermissionsAsync();
 
   if (status !== 'granted') {
     throw new Error(

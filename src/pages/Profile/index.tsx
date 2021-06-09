@@ -89,11 +89,16 @@ function Profile() {
             </FormField>
             <FormField>
               <FormFieldLabel>CPF:</FormFieldLabel>
-              <Input name="cpf" editable={!data.cpf} />
+              <Input
+                name="cpf"
+                editable={!data.cpf}
+                maxLength={11}
+                keyboardType="numeric"
+              />
             </FormField>
             <FormField>
               <FormFieldLabel>Telefone:</FormFieldLabel>
-              <Input name="phoneNumber" />
+              <Input name="phoneNumber" maxLength={11} keyboardType="numeric" />
             </FormField>
             <FormField>
               <Button

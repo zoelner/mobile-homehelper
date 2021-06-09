@@ -34,7 +34,6 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
 
     const { refreshToken, token, roles } = response.data;
 
-    Reactotron.log?.(roles);
     if (roles.includes(Roles.ROLE_PROFESSIONAL)) {
       Alert.alert(
         'Essa plataforma é exclusiva para clientes.',

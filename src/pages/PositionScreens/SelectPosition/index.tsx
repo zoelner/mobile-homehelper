@@ -83,6 +83,8 @@ function SelectPosition({ navigation, route }: Props) {
       return;
     }
 
+    const parsedNumber = currentAddress.name?.replace(/\D/g, '') || 0;
+
     try {
       const payload = {
         address: {
@@ -90,8 +92,9 @@ function SelectPosition({ navigation, route }: Props) {
           longitude: latLng!.coords.longitude,
           streetName: currentAddress.street,
           zipCode: currentAddress.postalCode,
-          number: currentAddress.name || 0,
-          neighborhood: currentAddress.subregion || '',
+          number: Number(parsedNumber),
+          neighborhood:
+            currentAddress.district || currentAddress.subregion || '',
         },
       };
 
