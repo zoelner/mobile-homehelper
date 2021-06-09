@@ -91,7 +91,11 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
 
     RootNavigation.goBack();
   } catch (err) {
-    Alert.alert('Falha no cadastro, verifique seus dados!');
+    if (err?.response?.data?.message) {
+      Alert.alert('Cadastro não realizado.', err.response.data.message);
+    } else {
+      Alert.alert('Falha no cadastro, verifique seus dados!');
+    }
     yield put(signFailure());
   }
 }
