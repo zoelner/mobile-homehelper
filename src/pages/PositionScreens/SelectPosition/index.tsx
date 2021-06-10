@@ -138,7 +138,9 @@ function SelectPosition({ navigation, route }: Props) {
           style={{ width: 375, height: 248 }}
           source={BackgroundPositionFirstStep}
         />
-        <HeaderBackButton onPress={() => navigation.goBack()} />
+        {profile.address && (
+          <HeaderBackButton onPress={() => navigation.goBack()} />
+        )}
       </Header>
 
       <TouchableWithoutFeedback onPress={navigateToFindPosition}>

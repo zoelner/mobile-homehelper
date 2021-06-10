@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
@@ -88,17 +88,25 @@ function Dashboard({ navigation }: Props) {
   }
 
   useEffect(() => {
-    if (profile.id && !profile.address) {
-      navigation.navigate('PositionScreens', {
-        screen: 'SelectPosition',
-      });
+    function verifyAddress() {
+      if (profile.id && !profile.address) {
+        Alert.alert(
+          'Seja bem vindo',
+          'Para dar continuidade, precisamos que você insira seu endereço.',
+        );
 
-      Alert.alert(
-        'Seja bem vindo',
-        'Para dar continuidade, precisamos que você insira seu endereço.',
-      );
+        setTimeout(() => {
+          navigation.navigate('PositionScreens', {
+            screen: 'SelectPosition',
+          });
+        }, 100);
+      }
     }
-  });
+
+    const unsubscribe = navigation.addListener('focus', verifyAddress);
+
+    return unsubscribe;
+  }, [profile.id, profile.address]);
 
   return (
     <Container>
