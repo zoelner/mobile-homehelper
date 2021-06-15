@@ -4,6 +4,7 @@ import { Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
+import { validateCPF, validatePhone } from 'validations-br';
 import * as Yup from 'yup';
 
 import Button from '~/components/Button';
@@ -20,7 +21,16 @@ import ProfileImage from './ProfileImage';
 import { Container, Form, FormField, FormFieldLabel } from './styles';
 
 const schema = Yup.object().shape({
-  phoneNumber: Yup.string().required('Telefone obrigatório'),
+  phoneNumber: Yup.string()
+    .test(
+      'is-telephone',
+      'Telefone inválido',
+      (value) => !!value && validatePhone(value),
+    )
+    .required('Telefone é obrigatório'),
+  cpf: Yup.string()
+    .test('is-cpf', 'CPF  inválido', (value) => !!value && validateCPF(value))
+    .required('CPF é obrigatório'),
 });
 
 interface ProfileForm {
