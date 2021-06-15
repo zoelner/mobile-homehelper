@@ -18,6 +18,7 @@ import api from '~/core/services/api';
 import { useSelector } from 'react-redux';
 import { RootState } from '~/core/store/modules/rootReducer';
 import { Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ServiceBudgetRouteProp = RouteProp<
   ServiceScreensNavigatorParamList,
@@ -84,41 +85,43 @@ function ServiceBudget({ route, navigation }: ServiceBudgetProps) {
   }
 
   return (
-    <Container>
-      <HeaderTitle>Qual tipo de serviço você precisa?</HeaderTitle>
-      <HeaderDescription>
-        Descreva o que você precisa resolver, preencha com máximo de detalhes
-        para que possa ser mensurado o trabalho.
-      </HeaderDescription>
+    <SafeAreaView style={{ flex: 1 }} edges={['bottom']}>
+      <Container>
+        <HeaderTitle>Qual tipo de serviço você precisa?</HeaderTitle>
+        <HeaderDescription>
+          Descreva o que você precisa resolver, preencha com máximo de detalhes
+          para que possa ser mensurado o trabalho.
+        </HeaderDescription>
 
-      <Body>
-        <Form ref={formRef} onSubmit={handleSignIn}>
-          <Input
-            name="description"
-            placeholder={`Descrição do problema para ${profile.name}`}
-            multiline
-            containerStyle={{
-              minHeight: 180,
-            }}
-            textAlignVertical={'top'}
-            maxLength={2000}
-            wordCount
-            returnKeyType="send"
-            onSubmitEditing={() => {
-              formRef.current?.submitForm();
-            }}
-          />
-        </Form>
-      </Body>
+        <Body>
+          <Form ref={formRef} onSubmit={handleSignIn}>
+            <Input
+              name="description"
+              placeholder={`Descrição do problema para ${profile.name}`}
+              multiline
+              containerStyle={{
+                minHeight: 180,
+              }}
+              textAlignVertical={'top'}
+              maxLength={2000}
+              wordCount
+              returnKeyType="send"
+              onSubmitEditing={() => {
+                formRef.current?.submitForm();
+              }}
+            />
+          </Form>
+        </Body>
 
-      <Button
-        onPress={() => {
-          formRef.current?.submitForm();
-        }}
-      >
-        Avançar para próxima etapa
-      </Button>
-    </Container>
+        <Button
+          onPress={() => {
+            formRef.current?.submitForm();
+          }}
+        >
+          Avançar para próxima etapa
+        </Button>
+      </Container>
+    </SafeAreaView>
   );
 }
 
