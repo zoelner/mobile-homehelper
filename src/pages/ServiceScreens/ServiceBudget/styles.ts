@@ -8,6 +8,7 @@ export const Container = styled.KeyboardAvoidingView.attrs({
 })`
   flex: 1;
   padding: 16px;
+  position: relative;
 `;
 
 export const HeaderTitle = styled.Text`

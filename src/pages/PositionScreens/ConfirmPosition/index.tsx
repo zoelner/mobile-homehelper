@@ -98,7 +98,9 @@ function ConfirmPosition({ navigation, route }: Props) {
         <View style={styles.header}>
           <Text style={styles.headerTitle}>{description.street}</Text>
           <Text style={styles.headerSubtitle}>
-            {`${description.subregion}, ${description.district}`}
+            {`${description.subregion ? `${description.subregion}, ` : ''}${
+              description.district ? description.district : ''
+            }`}
           </Text>
         </View>
         <View>
@@ -112,11 +114,20 @@ function ConfirmPosition({ navigation, route }: Props) {
           >
             <View style={{ width: 100, marginRight: 16 }}>
               <Text style={styles.formLabel}>Número</Text>
-              <Input name="number" placeholder="Número" />
+              <Input
+                name="number"
+                placeholder="Número"
+                maxLength={10}
+                keyboardType="numeric"
+              />
             </View>
             <View style={{ width: 200 }}>
               <Text style={styles.formLabel}>Complemento</Text>
-              <Input name="complement" placeholder="Complemento" />
+              <Input
+                name="complement"
+                placeholder="Complemento"
+                maxLength={50}
+              />
             </View>
           </Form>
         </View>

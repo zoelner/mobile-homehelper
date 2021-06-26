@@ -87,6 +87,27 @@ function Dashboard({ navigation }: Props) {
     });
   }
 
+  useEffect(() => {
+    function verifyAddress() {
+      if (profile.id && !profile.address) {
+        Alert.alert(
+          'Seja bem vindo',
+          'Para dar continuidade, precisamos que você insira seu endereço.',
+        );
+
+        setTimeout(() => {
+          navigation.navigate('PositionScreens', {
+            screen: 'SelectPosition',
+          });
+        }, 100);
+      }
+    }
+
+    const unsubscribe = navigation.addListener('focus', verifyAddress);
+
+    return unsubscribe;
+  }, [profile.id, profile.address]);
+
   return (
     <Container>
       <Header>

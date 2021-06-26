@@ -17,6 +17,7 @@ import {
 } from './actions';
 
 import { Roles } from '../user/types';
+import Reactotron from '~/core/config/Reactotron.config';
 
 export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
   try {
@@ -32,6 +33,15 @@ export function* signIn({ payload }: ReturnType<typeof signInRequest>) {
     });
 
     const { refreshToken, token, roles } = response.data;
+
+    if (roles.includes(Roles.ROLE_PROFESSIONAL)) {
+      Alert.alert(
+        'Essa plataforma é exclusiva para clientes.',
+        'Você profissional deve utilizar a plataforma web.',
+      );
+
+      return;
+    }
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -81,7 +91,11 @@ export function* signUp({ payload }: ReturnType<typeof signUpRequest>) {
 
     RootNavigation.goBack();
   } catch (err) {
-    Alert.alert('Falha no cadastro, verifique seus dados!');
+    if (err?.response?.data?.message) {
+      Alert.alert('Cadastro não realizado.', err.response.data.message);
+    } else {
+      Alert.alert('Falha no cadastro, verifique seus dados!');
+    }
     yield put(signFailure());
   }
 }

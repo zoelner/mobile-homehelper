@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
+import TermsOfUse from '~/pages/TermsOfUse';
 import HeaderRight from '~/components/HeaderRight';
 
 const RootNavigator = createStackNavigator();
@@ -14,7 +15,7 @@ function AuthRoutes() {
         name="SignIn"
         component={SignIn}
         options={{
-          title: 'SignIn',
+          title: 'Bem Vindo',
           headerRight: ({ tintColor }) => (
             <HeaderRight
               text="Cadastrar"
@@ -28,7 +29,14 @@ function AuthRoutes() {
         name="SignUp"
         component={SignUp}
         options={{
-          title: 'SignUp',
+          title: 'Cadastro',
+        }}
+      />
+      <RootNavigator.Screen
+        name="TermsOfUse"
+        component={TermsOfUse}
+        options={{
+          title: 'Termos de Uso',
         }}
       />
     </RootNavigator.Navigator>

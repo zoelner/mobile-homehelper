@@ -16,10 +16,6 @@ export async function getAccessToken() {
   return token;
 }
 
-getAccessToken().then((token) => {
-  Reactotron.log?.(`acessToken: ${token}`);
-});
-
 const refreshAuthLogic = async (request: AxiosError) => {
   const refreshToken = await AsyncStorage.getItem(
     Configuration.AUTH.KEY_REFRESH_TOKEN,

@@ -21,7 +21,7 @@ import { PositionScreensNavigatorParamList } from '~/navigations/app.routes/posi
 import { parseCurrentAddress, parseProfileAddress } from '~/core/utils/parsers';
 import { updateProfile } from '~/core/store/modules/user/actions';
 import { RootState } from '~/core/store/modules/rootReducer';
-import { LocationGeocodedAddress, LocationObject } from 'expo-location';
+import { getLocalization } from '../utils/getLocalization';
 
 type PositionsRouteProp = RouteProp<
   PositionScreensNavigatorParamList,
@@ -44,32 +44,21 @@ function SelectPosition({ navigation, route }: Props) {
   const [
     currentAddress,
     setCurrentAddress,
-  ] = useState<LocationGeocodedAddress | null>(null);
+  ] = useState<Location.LocationGeocodedAddress>();
 
-  const [latLng, setLatLng] = useState<LocationObject | null>(null);
+  const [latLng, setLatLng] = useState<Location.LocationObject | null>(null);
 
   const dispatch = useDispatch();
 
   const getDeviceLocalization = useCallback(async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
+    try {
+      const { location, geocode } = await getLocalization();
 
-    if (status !== 'granted') {
-      Alert.alert(
-        'Sem acesso a localização.',
-        'Precisamos acessar a sua localização, sem ela não podemos continuar',
-      );
-      navigation.goBack();
-      return;
+      setLatLng(location);
+      setCurrentAddress(geocode[0]);
+    } catch (error) {
+      Alert.alert('Sem acesso a localização.', error.message);
     }
-
-    let location = await Location.getCurrentPositionAsync({});
-    let geocode = await Location.reverseGeocodeAsync({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    });
-
-    setLatLng(location);
-    setCurrentAddress(geocode[0]);
   }, []);
 
   useEffect(() => {
@@ -77,7 +66,24 @@ function SelectPosition({ navigation, route }: Props) {
   }, [getDeviceLocalization]);
 
   async function setCurrentLocalization() {
-    if (!currentAddress) return;
+    if (!currentAddress) {
+      Alert.prompt(
+        'Não encontramos seu endereço.',
+        'Você deseja buscar sua localização?',
+        [
+          {
+            text: 'OK',
+            onPress: getDeviceLocalization,
+          },
+          {
+            text: 'Cancelar',
+          },
+        ],
+      );
+      return;
+    }
+
+    const parsedNumber = currentAddress.name?.replace(/\D/g, '') || 0;
 
     try {
       const payload = {
@@ -86,8 +92,9 @@ function SelectPosition({ navigation, route }: Props) {
           longitude: latLng!.coords.longitude,
           streetName: currentAddress.street,
           zipCode: currentAddress.postalCode,
-          number: currentAddress.name || 0,
-          neighborhood: currentAddress.subregion || '',
+          number: Number(parsedNumber),
+          neighborhood:
+            currentAddress.district || currentAddress.subregion || '',
         },
       };
 
@@ -131,7 +138,9 @@ function SelectPosition({ navigation, route }: Props) {
           style={{ width: 375, height: 248 }}
           source={BackgroundPositionFirstStep}
         />
-        <HeaderBackButton onPress={() => navigation.goBack()} />
+        {profile.address && (
+          <HeaderBackButton onPress={() => navigation.goBack()} />
+        )}
       </Header>
 
       <TouchableWithoutFeedback onPress={navigateToFindPosition}>
@@ -143,17 +152,20 @@ function SelectPosition({ navigation, route }: Props) {
       <PositionCards
         icon="navigation"
         title="Usar localização atual"
-        subtitle={parseCurrentAddress(currentAddress || undefined)}
+        subtitle={parseCurrentAddress(currentAddress)}
         onPress={setCurrentLocalization}
+        disabled={!currentAddress}
       />
 
-      <PositionCards
-        icon="navigation-2"
-        title="Casa"
-        subtitle={parseProfileAddress(profile.address)}
-        onPress={() => navigation.goBack()}
-        active
-      />
+      {profile.address && (
+        <PositionCards
+          icon="navigation-2"
+          title="Casa"
+          subtitle={parseProfileAddress(profile.address)}
+          onPress={() => navigation.goBack()}
+          active
+        />
+      )}
     </Container>
   );
 }

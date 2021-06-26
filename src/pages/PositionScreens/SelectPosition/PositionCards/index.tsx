@@ -16,6 +16,7 @@ interface Props {
   subtitle: string;
   onPress?: () => void;
   active?: boolean;
+  disabled?: boolean;
 }
 
 function PositionCards({
@@ -24,9 +25,10 @@ function PositionCards({
   subtitle,
   onPress,
   active = false,
+  disabled = false,
 }: Props) {
   return (
-    <CurrentLocalization onPress={onPress} active={active}>
+    <CurrentLocalization onPress={onPress} active={active} disabled={disabled}>
       <>
         <CurrentLocalizationIcon>
           <Feather name={icon} color="#8A8A8F" size={20} />
